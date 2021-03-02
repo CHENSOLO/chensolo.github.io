@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Exchange Server 2016 部署系列（一）环境准备</title>
+    <link href="/2021/03/02/hello-world/"/>
+    <url>/2021/03/02/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p><strong>近和同事一起在学习搭建Exchange server 2016，想着给自己做一下笔记，同时也方便其他想学习的小伙伴。</strong></p><h2 id="一、环境介绍"><a href="#一、环境介绍" class="headerlink" title="一、环境介绍"></a>一、环境介绍</h2><p>服务器角色情况<br><img src="/img/Exchange2016/exchange_01.jpg"><br><strong>搭建DNS和域控制器</strong><br>DNS 服务器对域来说是不可或缺的，一方面，域中的计算机使用 DNS 域名，DNS 需要为域中的计算机提供域名解析服务；另外一个重要的原因是域中的计算 机需要利用 DNS 提供的 SRV 记录来定位域控制器，因此我们在创建域之前需 要先做好 DNS 的准备工作，要么使用域控制器来做 DNS 服务器，要么使用一台单独的 DNS 服务器。这里使用一台独立的计算机来充当 DNS 服务器。<br><strong>1、添加“Active Directory 域服务”，“DNS服务器”角色，如下图所示：</strong><br><img src="/img/Exchange2016/exchange_02.jpg"><br><img src="/img/Exchange2016/exchange_03.jpg"><br><img src="/img/Exchange2016/exchange_04.jpg"><br><img src="/img/Exchange2016/exchange_05.jpg"><br><img src="/img/Exchange2016/exchange_06.jpg"><br><img src="/img/Exchange2016/exchange_07.jpg"><br><img src="/img/Exchange2016/exchange_08.jpg"><br><img src="/img/Exchange2016/exchange_09.jpg"><br><img src="/img/Exchange2016/exchange_10.jpg"><br>搭建完成以后，域控和dns角色也就添加成功，可以在开始菜单找到刚刚已经安装好的。<br><img src="/img/Exchange2016/exchange_11.jpg"><br><strong>2、创建区域并允许动态更新，如下图所示：</strong><br>首先我们要在 DNS 服务器上创建出一个区域，区域的名称和域名相同,域内计 算机的 DNS记录都创建在这个区域中。<br><img src="/img/Exchange2016/exchange_12.jpg"><br><img src="/img/Exchange2016/exchange_13.jpg"><br><img src="/img/Exchange2016/exchange_14.jpg"><br><img src="/img/Exchange2016/exchange_15.jpg"><br><img src="/img/Exchange2016/exchange_16.jpg"><br><img src="/img/Exchange2016/exchange_17.jpg"><br><img src="/img/Exchange2016/exchange_18.jpg"><br><strong>3、检查NS和SOA记录，如下图所示：</strong><br>区域创建完成后，一定要检查一下区域的 NS 记录和 SOA 记录。NS 记录描述了有多少个 DNS 服务器可以解析这个区域，SOA 记录描述了哪个 DNS 服务器是区域 的主服务器。如果 NS 记录和 SOA 记录出错，域的创建过程中就无法向 DNS 区域中写入应有的记录。<br><img src="/img/Exchange2016/exchange_19.jpg"><br><img src="/img/Exchange2016/exchange_20.jpg"><br><img src="/img/Exchange2016/exchange_21.jpg"><br><img src="/img/Exchange2016/exchange_22.jpg"><br><img src="/img/Exchange2016/exchange_23.jpg"><br><img src="/img/Exchange2016/exchange_24.jpg"><br><img src="/img/Exchange2016/exchange_25.jpg"><br><img src="/img/Exchange2016/exchange_26.jpg"><br><strong>4、添加新域（提升域控制器），如下图所示：</strong><br><img src="/img/Exchange2016/exchange_27.jpg"><br>我们选择“添加新林”，这个选项是什么意思呢？我们虽然只是简单地创建了一个域，但其实从逻辑上讲是创建了一个域林。因为域一定要隶属于域树，域树一定要隶属于域林。<br><img src="/img/Exchange2016/exchange_28.jpg"><br><img src="/img/Exchange2016/exchange_29.jpg"><br><img src="/img/Exchange2016/exchange_30.jpg"><br><img src="/img/Exchange2016/exchange_31.jpg"><br><img src="/img/Exchange2016/exchange_32.jpg"><br><img src="/img/Exchange2016/exchange_33.jpg"><br><img src="/img/Exchange2016/exchange_34.jpg"><br><img src="/img/Exchange2016/exchange_35.jpg"><br><img src="/img/Exchange2016/exchange_36.jpg"><br>安装完重启电脑，发现已经可以用域管理员身份登陆了，Test域控搭建成功。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
