@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" >
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="lemonchen">
+  <meta name="keywords" content="">
+  
+  <title>WSUS部署 Windows 10 更新 - lemonchen</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chensolo.github.io.git","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Never slack off</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="WSUS部署 Windows 10 更新">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-03-03 15:20" pubdate>
+        2021年3月3日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      21
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">WSUS部署 Windows 10 更新</h1>
+            
+            <div class="markdown-body">
+              <p>WSUS概述<br>为了让用户的windows系统与其他microsoft产品能够更安全，更稳定，因此microsoft会不定期在网站上推出最新的更新程序供用户下载与安装，而用户可以通过以下方式来取得这些程序：</p>
+<ul>
+<li><strong>手动连接microsoft update网站</strong></li>
+<li> <strong>通过windows系统的自动更新功能</strong></li>
+</ul>
+<p>然而以上两种方式对企业内部来说，都可能会有以下缺点。</p>
+<ul>
+<li><strong>影响网络效率：</strong>如果企业内部每台计算机都自行上网更新，将会增加对外网络的负担。</li>
+<li><strong>与现有软件相互干扰：</strong>如果企业内部使用的软件与更新程序发生冲突，则用户自行下载与安装更新程序可能会影响该软件或更新程序的正常运行。<br>WSUS是一个可以解决上述问题的产品，企业内部可以通过WSUS服务器集中从Microsoft update网站下载更新程序，并且在完成这些更新程序的测试工作，确定对企业内部计算机没有不良影响后，在通过网管审批程序，将程序部署到客户机上。</li>
+</ul>
+<p><strong>实验环境：</strong><br>1.hyper-v下的虚拟机进行<br>2.DC域控制器一台<br>3.WSUS补丁服务器一台<br>4.win10客户端一台</p>
+<p><strong>实验目的:</strong><br>1.WSUS获取Microsoft 更新<br>2.WSUS下发更新到客户端<br>3.客户端更新成功</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-0e2420e45bb0a553.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="拓步.jpg"></p>
+<p><strong>1、</strong> WSUS服务器角色的安装，安装的整个过程还是比较简单的，只需要一直下一步下一步即可，使用作为本地 Administrators 组成员的帐户登录到你计划安装 WSUS 服务器角色的服务器。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-1bc1745001f8837a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="1.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-72f0223bd8f81e21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="2.png"></p>
+<ul>
+<li>选择数据库。使用内置数据库，如果要使用SQL数据库，勾选数据库</li>
+<li>WID connectivity: wsus需要数据库的支持，使用内置数据库。</li>
+<li>WSUS服务：包含了更新服务、web服务、服务器同步数据等wsus的角色</li>
+<li>SQL Server：使wsus连接SQL server数据，适合大规模部署或高可靠性</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-99e77cca06d7afd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="3.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-5aafe22f4658944f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="4.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-a9987cf325b2fa04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="5.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-03b8cce70b6e3ede.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="6.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-b76807eb2ba163e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="7.png"></p>
+<p><strong>2、</strong> WSUS服务器角色之后，第一次使用WSUS的时候会进入WSUS的配置向导，对WSUS做一个基本的设置。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-b5823714fdb8415e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="1.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-6867638b7227ff33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="2.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-4331f7d5c6c8b6ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="3.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-309f71eb6f4fe049.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="4.png"></p>
+<p>在<strong>“选择上游服务器”</strong>页上，你可选择将更新与 Microsoft 更新或其他 WSUS 服务器同步。</p>
+<ul>
+<li><p>如果你选择从其他 WSUS 服务器同步，请指定服务器名称以及该服务器与上游服务器通信时所在的端口。</p>
+</li>
+<li><p><strong>若要使用 SSL，请选中“同步更新信息时使用 SSL”复选框。</strong></p>
+</li>
+<li><p><strong>如果这是副本服务器，请选择“这是上游服务器的副本”复选框</strong>。</p>
+</li>
+</ul>
+<p>因为我这里是第一个wsus服务器，如果你是二级wsus，这里就需要填第二个选项。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-63640450f465fdb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="5.png"></p>
+<p><strong>在“指定代理服务器”页上，选中“同步时使用代理服务器”复选框，然后在对应的框中键入代理服务器名称和端口号（默认是端口80）。</strong></p>
+<p><strong>如果你确定 WSUS 需要代理服务器才能访问 Internet，则必须完成上一步骤。</strong></p>
+<p><strong>如果你希望通过使用特定用户凭据来连接代理服务器，请选择“使用用户凭据连接代理服务器”复选框，然后在对应的框中键入用户名称、域和用户密码。如果你希望启用已连接代理服务器的用户的基本身份验证，请选择“允许基本身份验证（以明文形式发送密码）”对话框。</strong></p>
+<p>这里我就默认下一步了</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-410fc852ac062d06.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="6.png"></p>
+<p>这里要求必须有<strong>internet</strong>链接。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-3e4b88e4b2171080.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="7.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-c92860386e2fb539.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="8.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-2151425f263bfa33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="9.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-3eb125cc37b37484.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="10.png"></p>
+<p><strong>选择手动或自动同步。选择自动同步，需要设置第一次同步的时间与每天同步的次数。</strong><br><img src="https://upload-images.jianshu.io/upload_images/9650472-332ea4853f75a520.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="11.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-a69c7da5897dc114.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="12.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-d8f8cb039847b5ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="13.png"></p>
+<p><strong>WSUS 管理控制台</strong><br><img src="https://upload-images.jianshu.io/upload_images/9650472-976bb581e7945bbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="14.png"></p>
+<h1 id="设置客户端的自动更新"><a href="#设置客户端的自动更新" class="headerlink" title="设置客户端的自动更新"></a>设置客户端的自动更新</h1><p>我们要让客户端计算机能够通过WSUS服务器下载更新程序，而这个设置可以通过以下两种方法来完成。</p>
+<ul>
+<li><p>组策略:在AD域环境下，可以通过组策略进行设置。</p>
+</li>
+<li><p>本地计算机策略：如果没有AD域环境，或客户端计算机未加入域，则可以通过本地计算机策略进行设置。</p>
+</li>
+</ul>
+<p>我们利用组策略来进行说明。在域中创建一个GPO，WSUS策略，然后通过这个GPO来设置域内的所有客户端计算机的自动更新配置。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-b9dde4416b520581.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="1.png"></p>
+<p>######在组策略管理编辑器中，依次转到“计算机配置”\“策略”\“管理模板”\“Windows 组件”\“Windows 更新”</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-0fc38b97fe52c90e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="2.png"></p>
+<ul>
+<li><strong>通知下载并通知安装：</strong>在下载更新程序前会通知已登录的系统管理员，由他自行决定是否现在下载；下载完成后和准备安装前也会通知系统管理员，然后由他自行决定是否现在安装。</li>
+<li><strong>自动下载并通知安装：</strong>自动下载更新程序，下载完成后和准备安装前会通知已登录的系统管理员，然后由他自行决定是否现在安装。</li>
+<li><strong>自动下载并计划安装：</strong>自动下载更新程序，并且会在指定的时间自动安装。需要指定安装时间。</li>
+<li><strong>允许本地管理员选择设置：</strong>此选项让在客户端的本地管理员可以通过控制面板自行选择更新方式。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-545478c2f3ac8097.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="3.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-9391a042bc691f49.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="4.png"></p>
+<p>在 “选项” 下，在 “设置用于检测更新和设置 intranet 统计信息的 intranet 更新服务” 服务器选项中，键入，然后 <a href="http://Your_WSUS_Server_FQDN:PortNumber">http://Your_WSUS_Server_FQDN:PortNumber</a> 选择 “确定”。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">http</span>://<span class="hljs-number">192.168.137.98:8530</span> #这是我WSUS服务器的ip地址，这里需要填自己wsus服务器地址。<br><span class="hljs-attribute">WSUS</span> 的默认 HTTP 端口是 <span class="hljs-number">8530</span>，安全套接字层上的默认 HTTP (HTTPS) 端口是 <span class="hljs-number">8531</span>。 (其他选项为<span class="hljs-number">80</span>和 <span class="hljs-number">443</span>;不支持任何其他端口。 )<br></code></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-a1a6c6c13fc13662.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="5.png"></p>
+<ul>
+<li>可以设置“自动更新检测的频率”，默认是22小时，我们可以根据实际的需要来调整间隔。如图。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-ac7442514dbb79e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="6.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-718f1e1708c1f6b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="7.png"></p>
+<ul>
+<li>可以启用“对于已登录用户的计算机，计划的自动更新安装不执行重新启动”，这样的话，当计算机存在已登录的用户的时候，装完更新是否重启取决于用户的行为，计算机不会强制重启， </li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-95ed297e5b7a198f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="8.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-b796283cae2423f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="9.png"></p>
+<ul>
+<li>对于某些不会中断windows服务，也不会需要重启服务器才生效的更新，我们可以配置启用“允许自动更新立即安装”。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-9d3f864b593018b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="10.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-94a4ab76271549bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="11.png"></p>
+<p>设置完成后，必须等域内的客户端应用这个策略才能有效，而客户端计算机默认每隔90-120分钟应用一次。到客户端计算机上执行<strong>gpupdate/force</strong>命令。</p>
+<p>应用完成后，还必须等客户机与wsus服务器接触后，在wsus管理控制台才能看到这些客户机。不过需要等待20分钟才会主动联系WSUS服务器。在客户机上执行<strong>wuauclt/detectnow</strong> 命令。</p>
+<h1 id="配置自动审批规则"><a href="#配置自动审批规则" class="headerlink" title="配置自动审批规则"></a>配置自动审批规则</h1><ul>
+<li>可以设置当WSUS服务器与Windows Update同步时，自动审批下载的更新程序。例如，如果希望所有下载的安全更新与重要更新都能够自动审批给所有计算机:单击选项中的自动审批，在前景图中勾选默认的自动审批规则。如果还要将此规则应用到已经同步的更新程序，请单击允许规则。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-3104c95153edd771.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="1.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-b7f8c2867fa5bf1d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="2.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-3817d2b3be8bdf47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="5.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-36dea5d3d6336538.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="6.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-6b4c0111f85332e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="7.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-6105f6aa29b89c1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="8.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-9bcf456739578ec0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="9.png"></p>
+<h1 id="手动批准并部署功能更新"><a href="#手动批准并部署功能更新" class="headerlink" title="手动批准并部署功能更新"></a>手动批准并部署功能更新</h1><p><img src="https://upload-images.jianshu.io/upload_images/9650472-150bbe452c0a4dd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="1.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-2f54227fdee98498.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="2.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-26433d2d62b44f27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="3.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-68b7a2a147a853fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="4.png"></p>
+<pre><code>参考
+ [https://blog.51cto.com/search/user?uid=639838&amp;q=WSUS] 
+[https://docs.microsoft.com/zh-cn/windows/deployment/update/waas-manage-updates-wsus#%E7%AE%A1%E7%90%86-windows-10-%E6%9B%B4%E6%96%B0%E7%9A%84%E6%AD%A5%E9%AA%A4steps-to-manage-updates-for-windows-10](https://docs.microsoft.com/zh-cn/windows/deployment/update/waas-manage-updates-wsus#%E7%AE%A1%E7%90%86-windows-10-%E6%9B%B4%E6%96%B0%E7%9A%84%E6%AD%A5%E9%AA%A4steps-to-manage-updates-for-windows-10)
+
+</code></pre>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Windows/">Windows</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/WinServer/">WinServer</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/03/03/kickstart/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pxe+Dhcp+Httpd+Tftp+Kickstart搭建无人值守服务器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/03/powershell_add_user/">
+                        <span class="hidden-mobile">Powershell批量创建AD用户</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

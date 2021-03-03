@@ -20,7 +20,7 @@
   <meta name="author" content="lemonchen">
   <meta name="keywords" content="">
   
-  <title>Exchange Server 2016 部署系列（一）环境准备 - lemonchen</title>
+  <title>Powershell批量创建AD用户 - lemonchen</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -148,7 +148,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Exchange Server 2016 部署系列（一）环境准备">
+            <span class="h2" id="subtitle" title="Powershell批量创建AD用户">
               
             </span>
 
@@ -158,8 +158,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-02 10:04" pubdate>
-        2021年3月2日 上午
+      <time datetime="2021-03-03 15:14" pubdate>
+        2021年3月3日 下午
       </time>
     </span>
   
@@ -170,7 +170,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      548 字
+      145 字
     </span>
   
 
@@ -180,7 +180,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      5
+      2
        分钟
     </span>
   
@@ -210,17 +210,48 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Exchange Server 2016 部署系列（一）环境准备</h1>
+            <h1 style="display: none">Powershell批量创建AD用户</h1>
             
             <div class="markdown-body">
-              <p><strong>近和同事一起在学习搭建Exchange server 2016，想着给自己做一下笔记，同时也方便其他想学习的小伙伴。</strong></p>
-<h2 id="一、环境介绍"><a href="#一、环境介绍" class="headerlink" title="一、环境介绍"></a>一、环境介绍</h2><p>服务器角色情况<br><img src="/img/Exchange2016/exchange_01.jpg" srcset="/img/loading.gif"><br><strong>搭建DNS和域控制器</strong><br>DNS 服务器对域来说是不可或缺的，一方面，域中的计算机使用 DNS 域名，DNS 需要为域中的计算机提供域名解析服务；另外一个重要的原因是域中的计算 机需要利用 DNS 提供的 SRV 记录来定位域控制器，因此我们在创建域之前需 要先做好 DNS 的准备工作，要么使用域控制器来做 DNS 服务器，要么使用一台单独的 DNS 服务器。这里使用一台独立的计算机来充当 DNS 服务器。<br><strong>1、添加“Active Directory 域服务”，“DNS服务器”角色，如下图所示：</strong><br><img src="/img/Exchange2016/exchange_02.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_03.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_04.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_05.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_06.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_07.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_08.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_09.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_10.jpg" srcset="/img/loading.gif"><br>搭建完成以后，域控和dns角色也就添加成功，可以在开始菜单找到刚刚已经安装好的。<br><img src="/img/Exchange2016/exchange_11.jpg" srcset="/img/loading.gif"><br><strong>2、创建区域并允许动态更新，如下图所示：</strong><br>首先我们要在 DNS 服务器上创建出一个区域，区域的名称和域名相同,域内计 算机的 DNS记录都创建在这个区域中。<br><img src="/img/Exchange2016/exchange_12.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_13.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_14.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_15.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_16.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_17.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_18.jpg" srcset="/img/loading.gif"><br><strong>3、检查NS和SOA记录，如下图所示：</strong><br>区域创建完成后，一定要检查一下区域的 NS 记录和 SOA 记录。NS 记录描述了有多少个 DNS 服务器可以解析这个区域，SOA 记录描述了哪个 DNS 服务器是区域 的主服务器。如果 NS 记录和 SOA 记录出错，域的创建过程中就无法向 DNS 区域中写入应有的记录。<br><img src="/img/Exchange2016/exchange_19.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_20.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_21.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_22.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_23.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_24.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_25.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_26.jpg" srcset="/img/loading.gif"><br><strong>4、添加新域（提升域控制器），如下图所示：</strong><br><img src="/img/Exchange2016/exchange_27.jpg" srcset="/img/loading.gif"><br>我们选择“添加新林”，这个选项是什么意思呢？我们虽然只是简单地创建了一个域，但其实从逻辑上讲是创建了一个域林。因为域一定要隶属于域树，域树一定要隶属于域林。<br><img src="/img/Exchange2016/exchange_28.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_29.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_30.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_31.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_32.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_33.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_34.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_35.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_36.jpg" srcset="/img/loading.gif"><br>安装完重启电脑，发现已经可以用域管理员身份登陆了，Test域控搭建成功。</p>
+              <p><strong>查看Powershell版本</strong><br><img src="https://upload-images.jianshu.io/upload_images/9650472-78582f4b3d5563e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="1.png"></p>
+<ul>
+<li>准备好相关域用户信息，一般都是Excel表，以AdUserData.csv格式保存，再以文档模式打开，编码设置<strong>UTF-8</strong>保存覆盖当前文件。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-7a674dd0e9f9cd39.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="2.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-a2592079e3018cbd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="4.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-90e106183dce459e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15860831608682.png"></p>
+<ul>
+<li>此时无用户<br><img src="https://upload-images.jianshu.io/upload_images/9650472-d98286ee79eceebe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="3.png"></li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">Import-Csv</span> <span class="hljs-string">&#x27;C:\Users\administrator\Desktop\AdUserData.csv&#x27;</span>| <br><span class="hljs-built_in">ForEach-Object</span>&#123;<span class="hljs-built_in">New-ADUser</span> <span class="hljs-literal">-SamAccountName</span> <span class="hljs-variable">$_</span>.SamAccountName <span class="hljs-literal">-Surname</span> <span class="hljs-variable">$_</span>.Surname <span class="hljs-literal">-GivenName</span> <span class="hljs-variable">$_</span>.GivenName <span class="hljs-literal">-Name</span> `<br><span class="hljs-variable">$_</span>.Name <span class="hljs-literal">-UserPrincipalName</span> <span class="hljs-variable">$_</span>.UserPrincipalName <span class="hljs-literal">-DisplayName</span> `<br><span class="hljs-variable">$_</span>.Name <span class="hljs-literal">-Description</span> <span class="hljs-variable">$_</span>.Name <span class="hljs-literal">-Path</span> <span class="hljs-variable">$_</span>.Path <span class="hljs-literal">-AccountPassword</span>(<span class="hljs-built_in">ConvertTo-SecureString</span> <span class="hljs-literal">-AsPlainText</span> <span class="hljs-variable">$_</span>.AccountPassword <span class="hljs-literal">-Force</span>) <span class="hljs-literal">-Enabled</span> <span class="hljs-number">1</span> <span class="hljs-literal">-ChangePasswordAtLogon</span> <span class="hljs-number">1</span> &#125;<br><br></code></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-435d00f80bb71b86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="5.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-1b7868cb6433574c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="6.png"></p>
+<p><strong>New-ADUser -SamAccountName</strong>: 新建域用户</p>
+<p><strong>$_.SamAccountName</strong>: 匹配表格第一列</p>
+<p><strong>-Enabled 1</strong> :启用域用户</p>
+<p><strong>-ChangePasswordAtLogon 1</strong> ：用户下次登陆时必须更改密码</p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Windows/">Windows</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/powershell/">powershell</a>
+                    
+                      <a class="hover-with-bg" href="/tags/WinServer/">WinServer</a>
+                    
+                  </div>
                 
               </div>
               
@@ -235,9 +266,21 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2021/03/03/wsus_update_win10/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">WSUS部署 Windows 10 更新</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2021/03/03/windows_autoinstall_06/">
+                        <span class="hidden-mobile">Windows自动化装机部署（六）自动化部署配置</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
