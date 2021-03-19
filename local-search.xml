@@ -4,7 +4,7 @@
   
   
   <entry>
-    <title>Zabbix4.0前端报警媒介-邮件报警（四）</title>
+    <title>Zabbix4.0前端报警媒介-qq邮件报警（四）</title>
     <link href="/2021/03/19/zabbix/Zabbix4.0%E5%89%8D%E7%AB%AF%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B-%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A6(%E5%9B%9B)/"/>
     <url>/2021/03/19/zabbix/Zabbix4.0%E5%89%8D%E7%AB%AF%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B-%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A6(%E5%9B%9B)/</url>
     
@@ -195,9 +195,9 @@
     
     <tags>
       
-      <tag>WinServer</tag>
-      
       <tag>powershell</tag>
+      
+      <tag>WinServer</tag>
       
     </tags>
     
