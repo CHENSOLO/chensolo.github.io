@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" >
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="lemonchen">
+  <meta name="keywords" content="">
+  
+  <title>Zabbix4.0前端报警媒介-邮件报警（四） - lemonchen</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chensolo.github.io.git","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Never slack off</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Zabbix4.0前端报警媒介-邮件报警（四）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-03-19 12:39" pubdate>
+        2021年3月19日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      920 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Zabbix4.0前端报警媒介-邮件报警（四）</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一、报警前提-zabbix-server必须能访问internet"><a href="#一、报警前提-zabbix-server必须能访问internet" class="headerlink" title="一、报警前提,zabbix-server必须能访问internet"></a>一、报警前提,zabbix-server必须能访问internet</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs routeros">1.zabbix-server必须能访问internet,保证server可以和外界的SMTP（邮件传输协议25端口）服务器建立连接。<br>2.必须具备一个能发邮件的邮箱<br>3.必须确定要给谁发邮件<br><br>[root@server ~]#<span class="hljs-built_in"> ping </span>-c 1 mail.qq.com<br>PING v6.mail.qq.com (14.18.245.237) 56(84) bytes of data.<br>64 bytes <span class="hljs-keyword">from</span> 14.18.245.237 (14.18.245.237): <span class="hljs-attribute">icmp_seq</span>=1 <span class="hljs-attribute">ttl</span>=54 <span class="hljs-attribute">time</span>=3.30 ms<br><br>--- v6.mail.qq.com<span class="hljs-built_in"> ping </span>statistics ---<br>1 packets transmitted, 1 received, 0% packet loss, time 0ms<br>rtt min/avg/max/mdev = 3.303/3.303/3.303/0.000 ms<br>[root@server ~]# <br></code></pre></td></tr></table></figure>
+
+<h2 id="二、zabbix设置告警的完整流程"><a href="#二、zabbix设置告警的完整流程" class="headerlink" title="二、zabbix设置告警的完整流程"></a>二、zabbix设置告警的完整流程</h2><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-number">1</span>.添加用户组(添加权限)权限只能按用户分配<br><span class="hljs-number">2</span>.添加用户(选择用户类型、用户、管理员、超级管理员、添加报警媒介)<br><span class="hljs-number">3</span>.在<span class="hljs-string">&quot;管理&gt;报警媒介类型&quot;</span>中设置好报警媒介<br><span class="hljs-number">4</span>.启动<span class="hljs-built_in">action</span>，在<span class="hljs-string">&quot;配置&gt;动作&quot;</span>中启用,并配置操作<br></code></pre></td></tr></table></figure>
+
+<h2 id="三、zabbix设置邮件报警大体可以分为两大类"><a href="#三、zabbix设置邮件报警大体可以分为两大类" class="headerlink" title="三、zabbix设置邮件报警大体可以分为两大类"></a>三、zabbix设置邮件报警大体可以分为两大类</h2><ul>
+<li><strong>使用外部邮箱账号发送报警邮件设置</strong><ul>
+<li>Email</li>
+<li>自定义脚本</li>
+</ul>
+</li>
+<li><strong>使用zabbix服务端本地邮箱账号发送邮件</strong></li>
+</ul>
+<p><strong>1、使用QQ邮箱发送报警邮件</strong></p>
+<ul>
+<li>登录mail.qq.com获取QQ邮箱的授权码</li>
+</ul>
+<p><img src="/img/zabbix/zabbix_51.png" srcset="/img/loading.gif"><br><img src="/img/zabbix/zabbix_52.png" srcset="/img/loading.gif"></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#安装sendmail和mailx软件</span><br>[root@server ~]# yum -y install sendmail mailx<br><span class="hljs-comment">#开启sendmail服务</span><br>[root@server ~]# systemctl <span class="hljs-builtin-name">enable</span> sendmail --now<br>[root@server etc]# cp mail.rc mail2.rc<br>[root@server etc]# mv mail.rc mail.rc.bak<br>[root@server etc]# mv mail2.rc mail.rc<br><br><br><span class="hljs-comment">#配置sendmail客户端邮件配置</span><br>[root@server etc]# cat mail.rc<br><span class="hljs-builtin-name">set</span> <span class="hljs-attribute">from</span>=lmxi_dei@qq.com<br><span class="hljs-builtin-name">set</span> <span class="hljs-attribute">smtp</span>=smtp.qq.com<br><span class="hljs-builtin-name">set</span> <span class="hljs-attribute">smtp-auth-user</span>=lmxi_dei@qq.com<br><span class="hljs-comment">#password是qq邮箱的授权码，并不是qq密码</span><br><span class="hljs-builtin-name">set</span> <span class="hljs-attribute">smtp-auth-password</span>=xlxildjofkexwerf<br><span class="hljs-builtin-name">set</span> <span class="hljs-attribute">smtp-auth</span>=login<br>[root@server etc]# <br><br><span class="hljs-comment">#邮件发送测试</span><br>[root@server etc]# echo <span class="hljs-string">&#x27;zabbix邮件主题告警&#x27;</span> | mail -s <span class="hljs-string">&#x27;邮件测试第一次&#x27;</span> lemonchen@lexin.com<br><br></code></pre></td></tr></table></figure>
+<p><img src="/img/zabbix/zabbix_53.png" srcset="/img/loading.gif"></p>
+<p><strong>2、在zabbix-web上设置邮件报警媒介</strong></p>
+<ul>
+<li>这里我们首先设置发件人,设置报警媒介，我们选择电子邮件报警</li>
+</ul>
+<p><img src="/img/zabbix/zabbix_54.png" srcset="/img/loading.gif"><br><img src="/img/zabbix/zabbix_55.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>设置完发件人以后，需要设置收件人，收件人可以填多个，这里我就填自己的，大家不要给我炸我邮箱了哈哈</li>
+</ul>
+<p><img src="/img/zabbix/zabbix_56.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>发件人和收件人都设置完了，这时候需要有一个动作，当设置的值高于阈值的时候，有一个动作产生报警</li>
+</ul>
+<p><img src="/img/zabbix/zabbix_57.png" srcset="/img/loading.gif"></p>
+<p>这里的报警内容，可以做修改(<a target="_blank" rel="noopener" href="https://www.zabbix.com/documentation/4.0/zh/manual/appendix/macros/supported_by_location">https://www.zabbix.com/documentation/4.0/zh/manual/appendix/macros/supported_by_location</a>)</p>
+<ul>
+<li>操作发送报警的内容</li>
+</ul>
+<p><img src="/img/zabbix/zabbix_58.png" srcset="/img/loading.gif"></p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml">zabbix报警名称: </span><span class="hljs-template-variable">&#123;EVENT.NAME&#125;</span><br><span class="xml">告警主机：</span><span class="hljs-template-variable">&#123;HOSTNAME1&#125;</span><br><span class="xml">告警地址：</span><span class="hljs-template-variable">&#123;HOST.IP&#125;</span><br><span class="xml">告警时间：</span><span class="hljs-template-variable">&#123;EVENT.DATE&#125;</span><span class="xml"> </span><span class="hljs-template-variable">&#123;EVENT.TIME&#125;</span><br><span class="xml">告警等级：</span><span class="hljs-template-variable">&#123;TRIGGER.SEVERITY&#125;</span><br><span class="xml">告警信息：</span><span class="hljs-template-variable">&#123;TRIGGER.NAME&#125;</span><br><span class="xml">告警项目：</span><span class="hljs-template-variable">&#123;TRIGGER.KEY1&#125;</span><br><span class="xml">问题详情：</span><span class="hljs-template-variable">&#123;ITEM.NAME&#125;</span><span class="xml">:</span><span class="hljs-template-variable">&#123;ITEM.VAULE&#125;</span><br><span class="xml">当前状态：Error</span><br><span class="xml">事件ID：</span><span class="hljs-template-variable">&#123;EVENT.ID&#125;</span><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>恢复操作报警的内容<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="xml">zabbix恢复名称: </span><span class="hljs-template-variable">&#123;EVENT.NAME&#125;</span><br><span class="xml">已恢复主机：</span><span class="hljs-template-variable">&#123;HOSTNAME1&#125;</span><br><span class="xml">已恢复地址：</span><span class="hljs-template-variable">&#123;HOST.IP&#125;</span><br><span class="xml">已恢复时间：</span><span class="hljs-template-variable">&#123;EVENT.DATE&#125;</span><span class="xml"> </span><span class="hljs-template-variable">&#123;EVENT.TIME&#125;</span><br><span class="xml">已恢复信息：</span><span class="hljs-template-variable">&#123;TRIGGER.NAME&#125;</span><br><span class="xml">已恢复项目：</span><span class="hljs-template-variable">&#123;TRIGGER.KEY1&#125;</span><br><span class="xml">已恢复详情：</span><span class="hljs-template-variable">&#123;ITEM.NAME&#125;</span><span class="xml">:</span><span class="hljs-template-variable">&#123;ITEM.VAULE&#125;</span><br><span class="xml">当前状态：true</span><br><span class="xml">事件ID：</span><span class="hljs-template-variable">&#123;EVENT.ID&#125;</span><br><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><img src="/img/zabbix/zabbix_59.png" srcset="/img/loading.gif"></p>
+<ul>
+<li>测试报警结果图<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gradle">[root@server etc]# cat <span class="hljs-regexp">/dev/</span>zero &gt;&gt; <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span> &amp;<br>[root@server etc]# cat <span class="hljs-regexp">/dev/</span>zero &gt;&gt; <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span> &amp;<br>[root@server etc]# cat <span class="hljs-regexp">/dev/</span>zero &gt;&gt; <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span> &amp;<br>[root@server etc]# cat <span class="hljs-regexp">/dev/</span>zero &gt;&gt; <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span> &amp;<br><br></code></pre></td></tr></table></figure>
+<img src="/img/zabbix/zabbix_60.png" srcset="/img/loading.gif"></li>
+</ul>
+<ul>
+<li>自动恢复报警<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gradle">[root@server etc]# pkill cat<br>[<span class="hljs-number">7</span>]   Terminated              cat <span class="hljs-regexp">/dev/</span>zero &gt;&gt; <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span><br>[<span class="hljs-number">9</span>]   Terminated              cat <span class="hljs-regexp">/dev/</span>zero &gt;&gt; <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span><br>[<span class="hljs-number">8</span>]   Terminated              cat <span class="hljs-regexp">/dev/</span>zero &gt;&gt; <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span><br>[<span class="hljs-number">11</span>]   Terminated              cat <span class="hljs-regexp">/dev/</span>zero &gt;&gt; <span class="hljs-regexp">/dev/</span><span class="hljs-keyword">null</span><br><br></code></pre></td></tr></table></figure>
+<img src="/img/zabbix/zabbix_61.png" srcset="/img/loading.gif"></li>
+</ul>
+<p>这里能做恢复是因为之前我们前面触发器设置了恢复表达式小于0.7就恢复<br><img src="/img/zabbix/zabbix_62.png" srcset="/img/loading.gif"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Zabbix/">Zabbix</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Zabbix/">Zabbix</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/16/zabbix/Zabbix4.0%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA%E7%9B%91%E6%8E%A7(%E4%B8%89)/">
+                        <span class="hidden-mobile">Zabbix4.0添加主机监控（三）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
