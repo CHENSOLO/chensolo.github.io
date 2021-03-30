@@ -20,7 +20,7 @@
   <meta name="author" content="lemonchen">
   <meta name="keywords" content="">
   
-  <title>Exchange Server 2016 部署系列（六）高可用 DAG - lemonchen</title>
+  <title>Zabbix4.0配置自动发现规则（六） - lemonchen</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -148,7 +148,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Exchange Server 2016 部署系列（六）高可用 DAG">
+            <span class="h2" id="subtitle" title="Zabbix4.0配置自动发现规则（六）">
               
             </span>
 
@@ -158,8 +158,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-03 12:38" pubdate>
-        2021年3月3日 下午
+      <time datetime="2021-03-23 10:14" pubdate>
+        2021年3月23日 上午
       </time>
     </span>
   
@@ -170,7 +170,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      365 字
+      376 字
     </span>
   
 
@@ -180,7 +180,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      4
        分钟
     </span>
   
@@ -210,44 +210,42 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Exchange Server 2016 部署系列（六）高可用 DAG</h1>
+            <h1 style="display: none">Zabbix4.0配置自动发现规则（六）</h1>
             
             <div class="markdown-body">
-              <p><strong>见证目录权限配置</strong><br>本次实验中将使用DC作为见证服务器，需要将Exchange Trusted Subsytem组加入到见证服务器的本地Administrators组中，在DC中需要使用AD用户和计算机来添加</p>
-<ul>
-<li><p>添加Exchange Trusted Subsytem组到Administrators组中<br><img src="https://upload-images.jianshu.io/upload_images/9650472-7c02cd9000f9f816.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="1.png"></p>
+              <p>主机名        ip地址               功能<br>server      10.1.14.133        zabbix-server<br>agent2      10.1.14.30         zabbix-agent2 </p>
+<h2 id="一、网络发现"><a href="#一、网络发现" class="headerlink" title="一、网络发现"></a>一、网络发现</h2><p>Zabbix定期扫描网络发现规则中定义的IP范围，并为每条规则单独配置了检测的频率，不用手动添加主机。<br>网络发现由两个阶段组成，发现和动作。</p>
+<h2 id="二、创建自动发现规则"><a href="#二、创建自动发现规则" class="headerlink" title="二、创建自动发现规则"></a>二、创建自动发现规则</h2><ul>
+<li><p>创建一个自动发现的规则<br><img src="/img/zabbix/zabbix_76.png" srcset="/img/loading.gif"></p>
 </li>
-<li><p>在域控制器上，打开Active Directory用户和计算机，展开域节点“computer”，在右侧窗口中点击右键，选择“新建”-“计算机”，输入DAG群集计算机名称DAG01，点击“确定”。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-b56a2ad15950a0e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="2.png"></p>
+<li><p>我这里只选择了两个ip范围内<br><img src="/img/zabbix/zabbix_77.png" srcset="/img/loading.gif"></p>
 </li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/9650472-d197957418312ec6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="3.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9650472-d62f0746b2932ceb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="4.png"></p>
-<ul>
-<li><p>需要将权限分配给 CNO，在Active Directory用户和计算机中点击“查看”，勾选“高级功能”，选择创建的计算机DAG01右键属性，却换到隶属于选项卡，点击“添加”，将计算机DAG01添加到Exchange Trusted Subsytem组中。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-9f7222bc35abe5f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="5.png"></p>
+<li><p>agent下设置Server需要指向zabbix-server(安装agent这里就不说了)<br><img src="/img/zabbix/zabbix_78.png" srcset="/img/loading.gif"></p>
 </li>
-<li><p>新建DAG存放文件夹<br><img src="https://upload-images.jianshu.io/upload_images/9650472-8dac10a81b727046.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="6.png"></p>
+<li><p>检查zabbix通过system.uname进行发现,检测成功。<br><img src="/img/zabbix/zabbix_79.png" srcset="/img/loading.gif"></p>
 </li>
 </ul>
-<ul>
-<li>新建数据库可用性组，填入DAG名称、见证服务器名称、DAG IP地址等，点击“确定”,见证目录可不填，DAG会在见证服务器上自动创建见证目录，也可自己指定。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-2e45a595f5665e44.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="7.png"></li>
+<h2 id="三、创建动作"><a href="#三、创建动作" class="headerlink" title="三、创建动作"></a>三、创建动作</h2><ul>
+<li>选择自动发现然后创建动作<br><img src="/img/zabbix/zabbix_80.png" srcset="/img/loading.gif"></li>
 </ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/9650472-b922e17ec4341ea5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="8.png"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs css">对新的触发条件进行配置，点击小添加，会生成响应条件<br><span class="hljs-selector-tag">A</span>：设置自动发现规则为已经设置好的刚刚设置的网络段<br><span class="hljs-selector-tag">B</span>：设置从发现主机之后的在线时间，默认单位秒<br>C：发现状态是up状态<br>D：服务类型是zabbix-agen<br><br></code></pre></td></tr></table></figure>
+
 <ul>
-<li>点击“管理DAG成员资格”图标，单击“+”，从列表选择服务器Contso-EX01 Contso-EX02，单击“添加”，然后单击“确定”，单击“保存”，以保存更改。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-3781ee49dfffad2d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="9.png"></li>
+<li>根据条件进行操作，这里选择我们刚刚前面创建好的条件。</li>
 </ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/9650472-1aea42975aef22b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="10.png"></p>
+<p><img src="/img/zabbix/zabbix_81.png" srcset="/img/loading.gif"></p>
 <ul>
-<li><p>等“保存已成功完成“后，单击“关闭<br><img src="https://upload-images.jianshu.io/upload_images/9650472-cb5e6ccd7dda868b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="11.png"></p>
-</li>
-<li><p>将DAG网络修改成手动方式<br><img src="https://upload-images.jianshu.io/upload_images/9650472-11663e361d03249c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="12.png"></p>
-</li>
-<li><p>添加数据库副本到另一台服务器，点击新建的数据库名称，然后点击 “．．．”. 来添加副本数据库。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-29844f532d9eb564.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="13.png"></p>
-</li>
+<li>创建成功</li>
 </ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/9650472-a5fd54c02e51dda0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="14.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/9650472-34a48f4c402a822b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="15.png"></p>
+<p><img src="/img/zabbix/zabbix_82.png" srcset="/img/loading.gif"></p>
+<h2 id="四、设置自动注册规则"><a href="#四、设置自动注册规则" class="headerlink" title="四、设置自动注册规则"></a>四、设置自动注册规则</h2><p>zabbix agent可以实现自动注册，进而服务器对其进行监控，通过这种方式，就不用在服务器上进行手动配置了，可以直接对新host进行监控。</p>
 <ul>
-<li>添加完成<br><img src="https://upload-images.jianshu.io/upload_images/9650472-bf1282e0321a49a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="16.png"></li>
+<li><p>在zabbix agent客户端进行配置<br><img src="/img/zabbix/zabbix_83.png" srcset="/img/loading.gif"></p>
+</li>
+<li><p>web端上创建自动注册规则<br><img src="/img/zabbix/zabbix_84.png" srcset="/img/loading.gif"><br><img src="/img/zabbix/zabbix_85.png" srcset="/img/loading.gif"><br><img src="/img/zabbix/zabbix_86.png" srcset="/img/loading.gif"></p>
+</li>
+<li><p>这里可以重启下agent，检测自动注册上了<br><img src="/img/zabbix/zabbix_87.png" srcset="/img/loading.gif"></p>
+</li>
 </ul>
 
             </div>
@@ -258,7 +256,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Exchange2016/">Exchange2016</a>
+                      <a class="hover-with-bg" href="/categories/Zabbix/">Zabbix</a>
                     
                   </div>
                 
@@ -266,7 +264,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Exchange2016/">Exchange2016</a>
+                      <a class="hover-with-bg" href="/tags/Zabbix/">Zabbix</a>
                     
                   </div>
                 
@@ -283,18 +281,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/03/03/Exchange2016/exchange2016_other_01/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Exchange Server 2016 遇到的一些问题错误解决方法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/03/03/Exchange2016/exchange2016_05/">
-                        <span class="hidden-mobile">Exchange Server 2016 部署系列（五）基础配置</span>
+                      <a href="/2021/03/20/zabbix/Zabbix4.0%E5%89%8D%E7%AB%AF%E6%8A%A5%E8%AD%A6%E5%AA%92%E4%BB%8B-%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%8A%A5%E8%AD%A6(%E4%BA%94)/">
+                        <span class="hidden-mobile">Zabbix4.0前端报警媒介-企业微信报警（五）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
