@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>KMS服务器搭建激活win10/office</title>
+    <link href="/2021/04/17/Linux/install_kms/"/>
+    <url>/2021/04/17/Linux/install_kms/</url>
+    
+    <content type="html"><![CDATA[<p>KMS全称Key Management Service，即通过系统管理员（System Administrator）使用一个批量激活密钥（也就是大家经常看到的Volume Key）Vol密钥，设置一个激活服务器（Activation Server），并在每一个客户机上安装KMS的客户端，就可以进行批量激活和管理，极大的减少了工作量。</p><p>其实KMS服务器很早之前我就已经搭建过了，但是现在自己家的电脑和office都会提示过期，刚好自己也买了个阿里云的服务器，干脆就自建KMS服务器，虽然网上也有，但是怕有木马病毒，于是我开始了…其实搭建kms真的很简单，已经有大神写好的了，我的服务器是centos7</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">项目地址:https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/Wind4/</span>vlmcsd<br></code></pre></td></tr></table></figure><h2 id="一、部署KMS"><a href="#一、部署KMS" class="headerlink" title="一、部署KMS"></a>一、部署KMS</h2><ul><li><p><strong>下载安装包</strong></p><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@aliyun</span>-server <span class="hljs-keyword">local</span>]<span class="hljs-meta"># wget https://github.com/Wind4/vlmcsd/releases/download/svn1113/binaries.tar.gz</span><br></code></pre></td></tr></table></figure></li><li><p><strong>解压</strong></p><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@aliyun</span>-server <span class="hljs-keyword">local</span>]<span class="hljs-meta"># tar -zxvf binaries.tar.gz</span><br></code></pre></td></tr></table></figure></li><li><p><strong>进入该目录，下面是我存放的路径</strong></p><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">[root@aliyun-server <span class="hljs-keyword">static</span>]# pwd<br><span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/binaries/</span>Linux<span class="hljs-regexp">/intel/</span><span class="hljs-keyword">static</span><br></code></pre></td></tr></table></figure></li><li><p> <strong>运行</strong></p><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@aliyun</span>-server <span class="hljs-keyword">static</span>]<span class="hljs-meta"># ./vlmcsd-x64-musl-static</span><br></code></pre></td></tr></table></figure></li><li><p><strong>查看是否运行成功</strong></p><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elixir">[root<span class="hljs-variable">@aliyun</span>-server static]<span class="hljs-comment"># netstat -antp | grep vlmcsd</span><br>tcp        0      0 0.0.0.0<span class="hljs-symbol">:</span><span class="hljs-number">1688</span>            0.0.0.0<span class="hljs-symbol">:*</span>               LISTEN      <span class="hljs-number">2662</span>/./vlmcsd-x64-m <br>tcp6       0      0 ::<span class="hljs-symbol">:</span><span class="hljs-number">1688</span>                 ::<span class="hljs-symbol">:*</span>                    LISTEN      <span class="hljs-number">2662</span>/./vlmcsd-x64-m <br></code></pre></td></tr></table></figure></li></ul><p><strong>ps: 如果你安装了iptables，需要用一下命令开启1688端口, 然后我这个因为是阿里云服务器的嘛，所以还需要在控制在放开1688端口</strong></p><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pf">iptables -I INPUT <span class="hljs-number">5</span> -p tcp -m <span class="hljs-keyword">state</span> -–<span class="hljs-keyword">state</span> NEW -m tcp -–dport <span class="hljs-number">1688</span> -j ACCEPT<br><br></code></pre></td></tr></table></figure><p><img src="/img/Linux/kms_01.png"></p><h2 id="二、KMS激活系统"><a href="#二、KMS激活系统" class="headerlink" title="二、KMS激活系统"></a>二、KMS激活系统</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vala"><span class="hljs-meta">#KMS服务激活适用对象: VOL版本的Windows和Office</span><br></code></pre></td></tr></table></figure><ul><li><strong>确认系统是否VOL版本,如果不知道自己是什么版本,可以用以下命令查看。</strong></li></ul><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment">#用cmd以管理员生打开运行</span><br><span class="hljs-attribute">C</span>:\Windows\system<span class="hljs-number">32</span>&gt;slmgr /dlv<br></code></pre></td></tr></table></figure><p>在描述这行可以看到VOLUME则就是VOL版本的，如果有RETAIL则就是零售版本的。<br><img src="/img/Linux/kms_02.png"></p><ul><li><strong>零售版本如何转换为VOL版本呢，可以按照<a href="https://docs.microsoft.com/zh-cn/windows-server/get-started/kmsclientkeys">KMS客户端安装密钥</a>，用以下命令，然后找对应的操作版本和密钥安装转换即可，如果系统是VOL版本的就不用了做此步骤。</strong></li></ul><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">slmgr <span class="hljs-string">/ipk</span> VOL-key<br>例如<span class="hljs-function">:C</span>:\Windows\system32&gt;slmgr <span class="hljs-string">/ipk</span> W269N-WFGWX-YVC9B-4J6C9-T83GX<br></code></pre></td></tr></table></figure><p><img src="/img/Linux/kms_03.png"></p><ul><li><strong>现在我们来尝试激活系统，这里我的系统是windows10 专业版本</strong><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment">#查看版本</span><br>slmgr <span class="hljs-string">/dlv</span><br><span class="hljs-comment">#指定kms服务器，大家可以用我的服务器来激活，不要攻击我哈</span><br>slmgr <span class="hljs-string">/skms</span> 121.40.193.242<br><span class="hljs-comment">#激活</span><br>slmgr <span class="hljs-string">/ato</span><br></code></pre></td></tr></table></figure></li></ul><p><img src="/img/Linux/kms_04.png"><br><img src="/img/Linux/kms_05.png"></p><h2 id="三、激活Office"><a href="#三、激活Office" class="headerlink" title="三、激活Office"></a>三、激活Office</h2><ul><li><strong>还是用cmd管理员模式进入到安装office的目录</strong><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment">#进入安装目录</span><br>C:\Windows\system32&gt;<span class="hljs-keyword">cd</span> C:\Program Files\Microsoft Office\Office16<br><span class="hljs-comment">#指向服务器</span><br>cscript ospp.vbs <span class="hljs-string">/sethst</span><span class="hljs-function">:121.40.193.242</span><br><span class="hljs-comment">#手动激活</span><br>cscript ospp.vbs <span class="hljs-string">/act</span><br><span class="hljs-comment">#查询是否激活成功</span><br>cscript ospp.vbs <span class="hljs-string">/dstatus</span><br><span class="hljs-comment">#如果激活不成功，可以先查询然后把以前的key全部删除，在激活。</span><br>cscript ospp.vbs <span class="hljs-string">/unpkey</span><span class="hljs-function">:XXXXX</span><br></code></pre></td></tr></table></figure><img src="/img/Linux/kms_06.png"></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>kms、win10、office</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Zabbix4.0安装Grafana插件(七)</title>
     <link href="/2021/03/30/zabbix/Zabbix4.0%E5%AE%89%E8%A3%85Grafana%E6%8F%92%E4%BB%B6(%E4%B8%83)/"/>
     <url>/2021/03/30/zabbix/Zabbix4.0%E5%AE%89%E8%A3%85Grafana%E6%8F%92%E4%BB%B6(%E4%B8%83)/</url>
@@ -270,9 +295,9 @@
     
     <tags>
       
-      <tag>powershell</tag>
-      
       <tag>WinServer</tag>
+      
+      <tag>powershell</tag>
       
     </tags>
     

@@ -20,7 +20,7 @@
   <meta name="author" content="lemonchen">
   <meta name="keywords" content="">
   
-  <title>Zabbix4.0安装Grafana插件(七) - lemonchen</title>
+  <title>KMS服务器搭建激活win10/office - lemonchen</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -148,7 +148,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Zabbix4.0安装Grafana插件(七)">
+            <span class="h2" id="subtitle" title="KMS服务器搭建激活win10/office">
               
             </span>
 
@@ -158,8 +158,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-30 17:28" pubdate>
-        2021年3月30日 下午
+      <time datetime="2021-04-17 22:21" pubdate>
+        2021年4月17日 晚上
       </time>
     </span>
   
@@ -170,7 +170,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      697 字
+      732 字
     </span>
   
 
@@ -210,38 +210,47 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Zabbix4.0安装Grafana插件(七)</h1>
+            <h1 style="display: none">KMS服务器搭建激活win10/office</h1>
             
             <div class="markdown-body">
-              <h2 id="一、Grafana简介"><a href="#一、Grafana简介" class="headerlink" title="一、Grafana简介"></a>一、Grafana简介</h2><p>1、Grafana是什么，其实我也不知道，我也是小白开始学习的，但是通过我的了解发现Grafana是个好牛逼的开源工具，他可以接入各种数据源，然后用酷炫的图给我们展示出来，然后我们可以理解当前的指标，当前服务的状况，总之很吊，反正我是要学会它的了。</p>
-<p>2、Grafana常用的数据源有MySQL、Prometheus、AWS、还有Microsoft SQL Server、Oracle数据库等。<br>Grafana还支持多种告警模式，比如我知道的就有，Email、Telegram、钉钉等Webhook方式和，但监控与告警并非Grafana强项。</p>
-<p>3、Grafana如何展示数据？ Grafana靠各种插件来展示数据，插件分原生(内置)插件和社区插件。原生插件包括：Graph(图形)、Singlestat(单值状态图)、Stat(状态图)、Gauge(仪表度量图)、Bar Gauge(条状态度量图)、Table(表格图)、Text(文本图)、Dashboard list(仪表列盘)、Plugin list(插件列表)、AlertList(告警列表图)等。</p>
-<h2 id="二、安装Grafana"><a href="#二、安装Grafana" class="headerlink" title="二、安装Grafana"></a>二、安装Grafana</h2><ul>
-<li>这边可以到<a target="_blank" rel="noopener" href="https://grafana.com/grafana/download/6.7.3?pg=get&plcmt=selfmanaged-box1-cta1">官网</a>下载，有多个版本下载，我这边用的是7.1.5的版本</li>
+              <p>KMS全称Key Management Service，即通过系统管理员（System Administrator）使用一个批量激活密钥（也就是大家经常看到的Volume Key）Vol密钥，设置一个激活服务器（Activation Server），并在每一个客户机上安装KMS的客户端，就可以进行批量激活和管理，极大的减少了工作量。</p>
+<p>其实KMS服务器很早之前我就已经搭建过了，但是现在自己家的电脑和office都会提示过期，刚好自己也买了个阿里云的服务器，干脆就自建KMS服务器，虽然网上也有，但是怕有木马病毒，于是我开始了…其实搭建kms真的很简单，已经有大神写好的了，我的服务器是centos7</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">项目地址:https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/Wind4/</span>vlmcsd<br></code></pre></td></tr></table></figure>
+
+<h2 id="一、部署KMS"><a href="#一、部署KMS" class="headerlink" title="一、部署KMS"></a>一、部署KMS</h2><ul>
+<li><p><strong>下载安装包</strong></p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@aliyun</span>-server <span class="hljs-keyword">local</span>]<span class="hljs-meta"># wget https://github.com/Wind4/vlmcsd/releases/download/svn1113/binaries.tar.gz</span><br></code></pre></td></tr></table></figure></li>
+<li><p><strong>解压</strong></p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@aliyun</span>-server <span class="hljs-keyword">local</span>]<span class="hljs-meta"># tar -zxvf binaries.tar.gz</span><br></code></pre></td></tr></table></figure></li>
+<li><p><strong>进入该目录，下面是我存放的路径</strong></p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle">[root@aliyun-server <span class="hljs-keyword">static</span>]# pwd<br><span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/binaries/</span>Linux<span class="hljs-regexp">/intel/</span><span class="hljs-keyword">static</span><br></code></pre></td></tr></table></figure></li>
+<li><p> <strong>运行</strong></p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit">[root<span class="hljs-symbol">@aliyun</span>-server <span class="hljs-keyword">static</span>]<span class="hljs-meta"># ./vlmcsd-x64-musl-static</span><br></code></pre></td></tr></table></figure></li>
+<li><p><strong>查看是否运行成功</strong></p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elixir">[root<span class="hljs-variable">@aliyun</span>-server static]<span class="hljs-comment"># netstat -antp | grep vlmcsd</span><br>tcp        0      0 0.0.0.0<span class="hljs-symbol">:</span><span class="hljs-number">1688</span>            0.0.0.0<span class="hljs-symbol">:*</span>               LISTEN      <span class="hljs-number">2662</span>/./vlmcsd-x64-m <br>tcp6       0      0 ::<span class="hljs-symbol">:</span><span class="hljs-number">1688</span>                 ::<span class="hljs-symbol">:*</span>                    LISTEN      <span class="hljs-number">2662</span>/./vlmcsd-x64-m <br></code></pre></td></tr></table></figure></li>
 </ul>
-<p><img src="/img/zabbix/grafana_02.png" srcset="/img/loading.gif"></p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">[root@<span class="hljs-keyword">server</span> ~]# ls<br>anaconda-ks.cfg  grafana<span class="hljs-number">-7.1</span><span class="hljs-number">.5</span><span class="hljs-number">-1.</span>x86_64.rpm  graphfont.ttf  graphfont.ttf.bak  <span class="hljs-keyword">show</span>  use  zabbix-<span class="hljs-keyword">release</span><span class="hljs-number">-4.0</span><span class="hljs-number">-1.</span>el7.noarch.rpm<br>[root@<span class="hljs-keyword">server</span> ~]# yum -y install grafana<span class="hljs-number">-7.1</span><span class="hljs-number">.5</span><span class="hljs-number">-1.</span>x86_64.rpm <br><br>#设置开机自启动<br>[root@<span class="hljs-keyword">server</span> ~]# systemctl <span class="hljs-keyword">enable</span> grafana-<span class="hljs-keyword">server</span> <span class="hljs-comment">--now</span><br>Created symlink <span class="hljs-keyword">from</span> /etc/systemd/<span class="hljs-keyword">system</span>/multi-<span class="hljs-keyword">user</span>.target.wants/grafana-<span class="hljs-keyword">server</span>.service <span class="hljs-keyword">to</span> /usr/lib/systemd/<span class="hljs-keyword">system</span>/grafana-<span class="hljs-keyword">server</span>.service.<br>[root@<span class="hljs-keyword">server</span> ~]# netstat -tunlp | grep grafana<br>tcp6       <span class="hljs-number">0</span>      <span class="hljs-number">0</span> :::<span class="hljs-number">3000</span>                 :::*                    <span class="hljs-keyword">LISTEN</span>      <span class="hljs-number">1646</span>/grafana-<span class="hljs-keyword">server</span> <br><br></code></pre></td></tr></table></figure>
+<p><strong>ps: 如果你安装了iptables，需要用一下命令开启1688端口, 然后我这个因为是阿里云服务器的嘛，所以还需要在控制在放开1688端口</strong></p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pf">iptables -I INPUT <span class="hljs-number">5</span> -p tcp -m <span class="hljs-keyword">state</span> -–<span class="hljs-keyword">state</span> NEW -m tcp -–dport <span class="hljs-number">1688</span> -j ACCEPT<br><br></code></pre></td></tr></table></figure>
+<p><img src="/img/Linux/kms_01.png" srcset="/img/loading.gif"></p>
+<h2 id="二、KMS激活系统"><a href="#二、KMS激活系统" class="headerlink" title="二、KMS激活系统"></a>二、KMS激活系统</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vala"><span class="hljs-meta">#KMS服务激活适用对象: VOL版本的Windows和Office</span><br></code></pre></td></tr></table></figure>
+
 <ul>
-<li><strong>默认账户和密码都是admin</strong><br><img src="/img/zabbix/grafana_03.png" srcset="/img/loading.gif"></li>
-<li><strong>界面还是很高大上的，有没有</strong><br><img src="/img/zabbix/grafana_04.png" srcset="/img/loading.gif"></li>
+<li><strong>确认系统是否VOL版本,如果不知道自己是什么版本,可以用以下命令查看。</strong></li>
 </ul>
-<h2 id="三、Grafana接入zabbix"><a href="#三、Grafana接入zabbix" class="headerlink" title="三、Grafana接入zabbix"></a>三、Grafana接入zabbix</h2><ul>
-<li><p><strong>我们可以在线安装插件，我查了下默认安装位置在/var/lib/grafana/plugins;插件安装后需要重启grafana-server，安装插件需要用到grafana的命令。</strong><br><strong>可以用以下命令查看grafana的命令是如何使用的</strong><br><img src="/img/zabbix/grafana_05.png" srcset="/img/loading.gif"><br><img src="/img/zabbix/grafana_06.png" srcset="/img/loading.gif"><br><img src="/img/zabbix/grafana_07.png" srcset="/img/loading.gif"></p>
-</li>
-<li><p><strong>只有安装zabbix的插件了才可以在grafana中添加zabbix的数据源，使用zabbix的监控数据绘画出图形来</strong><br><img src="/img/zabbix/grafana_09.png" srcset="/img/loading.gif"></p>
-</li>
-<li><p><strong>这里我找了一些常用的插件，有需要的可以用</strong></p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">grafana-cli plugins <span class="hljs-keyword">install </span>alexanderzobnin-zabbix-app<br>grafana-cli plugins <span class="hljs-keyword">install </span>grafana-piechart-panel<br>grafana-cli plugins <span class="hljs-keyword">install </span>agenty-flowcharting-panel<br>grafana-cli plugins <span class="hljs-keyword">install </span>grafana-<span class="hljs-keyword">clock-panel</span><br><span class="hljs-keyword">grafana-cli </span>plugins <span class="hljs-keyword">install </span>pierosavi-imageit-panel<br>grafana-cli plugins <span class="hljs-keyword">install </span><span class="hljs-keyword">jdbranham-diagram-panel</span><br><span class="hljs-keyword">grafana-cli </span>plugins <span class="hljs-keyword">install </span>agenty-flowcharting-panel<br><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment">#用cmd以管理员生打开运行</span><br><span class="hljs-attribute">C</span>:\Windows\system<span class="hljs-number">32</span>&gt;slmgr /dlv<br></code></pre></td></tr></table></figure>
+<p>在描述这行可以看到VOLUME则就是VOL版本的，如果有RETAIL则就是零售版本的。<br><img src="/img/Linux/kms_02.png" srcset="/img/loading.gif"></p>
+<ul>
+<li><strong>零售版本如何转换为VOL版本呢，可以按照<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows-server/get-started/kmsclientkeys">KMS客户端安装密钥</a>，用以下命令，然后找对应的操作版本和密钥安装转换即可，如果系统是VOL版本的就不用了做此步骤。</strong></li>
 </ul>
-<h2 id="四、配置zabbix源"><a href="#四、配置zabbix源" class="headerlink" title="四、配置zabbix源"></a>四、配置zabbix源</h2><ul>
-<li><p><strong>安装完alexanderzobnin-zabbix-app插件后，记得要重启grafana，然后才可以进行启用插件</strong></p>
-<p><img src="/img/zabbix/grafana_10.png" srcset="/img/loading.gif"><br><img src="/img/zabbix/grafana_11.png" srcset="/img/loading.gif"><br><img src="/img/zabbix/grafana_12.png" srcset="/img/loading.gif"></p>
-</li>
-<li><p><strong>这里添加zabbix的数据源,然后我第一次添加的时候找不到zabbix插件，查了一下，原因是因为我使用的grafana7.1.5版本的问题，要修改配置才启动才可以使用。</strong></p>
- <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[root@server plugins]</span><span class="hljs-comment"># vim /etc/grafana/grafana.ini </span><br><span class="hljs-attr">allow_loading_unsigned_plugins</span> = alexanderzobnin-zabbix-datasource<br><span class="hljs-section">[root@server plugins]</span><span class="hljs-comment"># systemctl restart grafana-server</span><br><br></code></pre></td></tr></table></figure>
-<p> <img src="/img/zabbix/grafana_13.png" srcset="/img/loading.gif"><br> <img src="/img/zabbix/grafana_14.png" srcset="/img/loading.gif"><br> <img src="/img/zabbix/grafana_15.png" srcset="/img/loading.gif"><br> <img src="/img/zabbix/grafana_16.png" srcset="/img/loading.gif"></p>
-<p> <strong>这里就成功在grafana下添加zabbix成功了 nice！ 又能愉快的操作了</strong></p>
-</li>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">slmgr <span class="hljs-string">/ipk</span> VOL-key<br>例如<span class="hljs-function">:C</span>:\Windows\system32&gt;slmgr <span class="hljs-string">/ipk</span> W269N-WFGWX-YVC9B-4J6C9-T83GX<br></code></pre></td></tr></table></figure>
+<p><img src="/img/Linux/kms_03.png" srcset="/img/loading.gif"></p>
+<ul>
+<li><strong>现在我们来尝试激活系统，这里我的系统是windows10 专业版本</strong><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment">#查看版本</span><br>slmgr <span class="hljs-string">/dlv</span><br><span class="hljs-comment">#指定kms服务器，大家可以用我的服务器来激活，不要攻击我哈</span><br>slmgr <span class="hljs-string">/skms</span> 121.40.193.242<br><span class="hljs-comment">#激活</span><br>slmgr <span class="hljs-string">/ato</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><img src="/img/Linux/kms_04.png" srcset="/img/loading.gif"><br><img src="/img/Linux/kms_05.png" srcset="/img/loading.gif"></p>
+<h2 id="三、激活Office"><a href="#三、激活Office" class="headerlink" title="三、激活Office"></a>三、激活Office</h2><ul>
+<li><strong>还是用cmd管理员模式进入到安装office的目录</strong><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment">#进入安装目录</span><br>C:\Windows\system32&gt;<span class="hljs-keyword">cd</span> C:\Program Files\Microsoft Office\Office16<br><span class="hljs-comment">#指向服务器</span><br>cscript ospp.vbs <span class="hljs-string">/sethst</span><span class="hljs-function">:121.40.193.242</span><br><span class="hljs-comment">#手动激活</span><br>cscript ospp.vbs <span class="hljs-string">/act</span><br><span class="hljs-comment">#查询是否激活成功</span><br>cscript ospp.vbs <span class="hljs-string">/dstatus</span><br><span class="hljs-comment">#如果激活不成功，可以先查询然后把以前的key全部删除，在激活。</span><br>cscript ospp.vbs <span class="hljs-string">/unpkey</span><span class="hljs-function">:XXXXX</span><br></code></pre></td></tr></table></figure>
+<img src="/img/Linux/kms_06.png" srcset="/img/loading.gif"></li>
 </ul>
 
             </div>
@@ -252,7 +261,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Zabbix/">Zabbix</a>
+                      <a class="hover-with-bg" href="/categories/Linux/">Linux</a>
                     
                   </div>
                 
@@ -260,7 +269,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Zabbix%E3%80%81grafana/">Zabbix、grafana</a>
+                      <a class="hover-with-bg" href="/tags/kms%E3%80%81win10%E3%80%81office/">kms、win10、office</a>
                     
                   </div>
                 
@@ -277,18 +286,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/04/17/Linux/install_kms/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">KMS服务器搭建激活win10/office</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/03/23/zabbix/Zabbix4.0%E9%85%8D%E7%BD%AE%E8%87%AA%E5%8A%A8%E5%8F%91%E7%8E%B0%E8%A7%84%E5%88%99(%E5%85%AD)/">
-                        <span class="hidden-mobile">Zabbix4.0配置自动发现规则（六）</span>
+                      <a href="/2021/03/30/zabbix/Zabbix4.0%E5%AE%89%E8%A3%85Grafana%E6%8F%92%E4%BB%B6(%E4%B8%83)/">
+                        <span class="hidden-mobile">Zabbix4.0安装Grafana插件(七)</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
