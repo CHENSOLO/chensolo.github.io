@@ -331,25 +331,28 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/08/31/zabbix/Zabbix4.0%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA%E7%9B%91%E6%8E%A7(%E4%B8%89)/" target="_self">
-          <img src="/img/zabbix/zabbix_article_01.jpg" srcset="/img/loading.gif" alt="Zabbix4.0添加主机监控（三）">
+        <a href="/2022/08/31/zabbix/Zabbix4.0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(%E4%BA%8C)/" target="_self">
+          <img src="/img/zabbix/zabbix_article_01.jpg" srcset="/img/loading.gif" alt="Zabbix4.0环境搭建（二）">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/08/31/zabbix/Zabbix4.0%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA%E7%9B%91%E6%8E%A7(%E4%B8%89)/">Zabbix4.0添加主机监控（三）</a>
+        <a href="/2022/08/31/zabbix/Zabbix4.0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(%E4%BA%8C)/">Zabbix4.0环境搭建（二）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/08/31/zabbix/Zabbix4.0%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA%E7%9B%91%E6%8E%A7(%E4%B8%89)/">
+        <a href="/2022/08/31/zabbix/Zabbix4.0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(%E4%BA%8C)/">
           
           
             
           
-          一、安装zabbix-agent1、设置软件仓库
-1234567891011121314151617181920#下载源[root@agent1 ~]# wget http://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm[root@agent1 ~]# rpm -ivh zabbix-re
+          一、实验准备这里只做实验演练准备,Centos7三台台，一台为监控服务器，两台座位被监控节点。
+123zabbix-server 192.168.100.101zabbix-agent 192.168.100.102zabbix-agent 192.168.100.103
+
+二、环境搭建1、zabbix-server搭建
+12345678910111213141516171819202122232
         </a>
       </p>
 
@@ -386,28 +389,25 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/08/31/zabbix/Zabbix4.0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(%E4%BA%8C)/" target="_self">
-          <img src="/img/zabbix/zabbix_article_01.jpg" srcset="/img/loading.gif" alt="Zabbix4.0环境搭建（二）">
+        <a href="/2022/08/31/zabbix/Zabbix4.0%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA%E7%9B%91%E6%8E%A7(%E4%B8%89)/" target="_self">
+          <img src="/img/zabbix/zabbix_article_01.jpg" srcset="/img/loading.gif" alt="Zabbix4.0添加主机监控（三）">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/08/31/zabbix/Zabbix4.0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(%E4%BA%8C)/">Zabbix4.0环境搭建（二）</a>
+        <a href="/2022/08/31/zabbix/Zabbix4.0%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA%E7%9B%91%E6%8E%A7(%E4%B8%89)/">Zabbix4.0添加主机监控（三）</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2022/08/31/zabbix/Zabbix4.0%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(%E4%BA%8C)/">
+        <a href="/2022/08/31/zabbix/Zabbix4.0%E6%B7%BB%E5%8A%A0%E4%B8%BB%E6%9C%BA%E7%9B%91%E6%8E%A7(%E4%B8%89)/">
           
           
             
           
-          一、实验准备这里只做实验演练准备,Centos7三台台，一台为监控服务器，两台座位被监控节点。
-123zabbix-server 192.168.100.101zabbix-agent 192.168.100.102zabbix-agent 192.168.100.103
-
-二、环境搭建1、zabbix-server搭建
-12345678910111213141516171819202122232
+          一、安装zabbix-agent1、设置软件仓库
+1234567891011121314151617181920#下载源[root@agent1 ~]# wget http://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-1.el7.noarch.rpm[root@agent1 ~]# rpm -ivh zabbix-re
         </a>
       </p>
 
