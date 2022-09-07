@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" >
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="lemonchen">
+  <meta name="keywords" content="">
+  
+  <title>Exchange Server 2016 部署系列（一）环境准备 - lemonchen</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/googlecode.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chensolo.github.io.git","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Never slack off</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Exchange Server 2016 部署系列（一）环境准备">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-08-31 12:14" pubdate>
+        2022年8月31日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      549 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      5
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Exchange Server 2016 部署系列（一）环境准备</h1>
+            
+            <div class="markdown-body">
+              <p><strong>近和同事一起在学习搭建Exchange server 2016，想着给自己做一下笔记，同时也方便其他想学习的小伙伴。</strong></p>
+<h2 id="一、环境介绍"><a href="#一、环境介绍" class="headerlink" title="一、环境介绍"></a>一、环境介绍</h2><p>服务器角色情况<br><img src="/img/Exchange2016/exchange_01.jpg" srcset="/img/loading.gif"><br><strong>搭建DNS和域控制器</strong><br>DNS 服务器对域来说是不可或缺的，一方面，域中的计算机使用 DNS 域名，DNS 需要为域中的计算机提供域名解析服务；另外一个重要的原因是域中的计算 机需要利用 DNS 提供的 SRV 记录来定位域控制器，因此我们在创建域之前需 要先做好 DNS 的准备工作，要么使用域控制器来做 DNS 服务器，要么使用一台单独的 DNS 服务器。这里使用一台独立的计算机来充当 DNS 服务器。<br><strong>1、添加“Active Directory 域服务”，“DNS服务器”角色，如下图所示：</strong><br><img src="/img/Exchange2016/exchange_02.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_03.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_04.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_05.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_06.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_07.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_08.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_09.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_10.jpg" srcset="/img/loading.gif"><br>搭建完成以后，域控和dns角色也就添加成功，可以在开始菜单找到刚刚已经安装好的。<br><img src="/img/Exchange2016/exchange_11.jpg" srcset="/img/loading.gif"><br><strong>2、创建区域并允许动态更新，如下图所示：</strong><br>首先我们要在 DNS 服务器上创建出一个区域，区域的名称和域名相同,域内计 算机的 DNS记录都创建在这个区域中。<br><img src="/img/Exchange2016/exchange_12.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_13.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_14.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_15.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_16.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_17.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_18.jpg" srcset="/img/loading.gif"><br><strong>3、检查NS和SOA记录，如下图所示：</strong><br>区域创建完成后，一定要检查一下区域的 NS 记录和 SOA 记录。NS 记录描述了有多少个 DNS 服务器可以解析这个区域，SOA 记录描述了哪个 DNS 服务器是区域 的主服务器。如果 NS 记录和 SOA 记录出错，域的创建过程中就无法向 DNS 区域中写入应有的记录。<br><img src="/img/Exchange2016/exchange_19.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_20.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_21.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_22.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_23.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_24.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_25.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_26.jpg" srcset="/img/loading.gif"><br><strong>4、添加新域（提升域控制器），如下图所示：</strong><br><img src="/img/Exchange2016/exchange_27.jpg" srcset="/img/loading.gif"><br>我们选择“添加新林”，这个选项是什么意思呢？我们虽然只是简单地创建了一个域，但其实从逻辑上讲是创建了一个域林。因为域一定要隶属于域树，域树一定要隶属于域林。 L<br><img src="/img/Exchange2016/exchange_28.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_29.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_30.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_31.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_32.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_33.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_34.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_35.jpg" srcset="/img/loading.gif"><br><img src="/img/Exchange2016/exchange_36.jpg" srcset="/img/loading.gif"><br>安装完重启电脑，发现已经可以用域管理员身份登陆了，Test域控搭建成功。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Exchange2016/">Exchange2016</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Exchange2016/">Exchange2016</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/31/Exchange2016/exchange2016_05/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Exchange Server 2016 部署系列（五）基础配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/31/Exchange2016/exchange2016_03/">
+                        <span class="hidden-mobile">Exchange Server 2016 部署系列（三）环境准备</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" >
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="lemonchen">
+  <meta name="keywords" content="">
+  
+  <title>Linux知识要点记录 - lemonchen</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/googlecode.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chensolo.github.io.git","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Never slack off</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Linux知识要点记录">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-08-31 16:23" pubdate>
+        2022年8月31日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux知识要点记录</h1>
+            
+            <div class="markdown-body">
+              <h2 id="Linux知识记录"><a href="#Linux知识记录" class="headerlink" title="Linux知识记录 "></a>Linux知识记录 </h2><p><code>用于参考</code></p>
+<h2 id="一、iptables"><a href="#一、iptables" class="headerlink" title="一、iptables"></a>一、iptables</h2><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arduino">Filter表：过滤数据包<br>NAT表：用于网络地址转换(IP、端口)<br>Mangle表：修改数据包的服务类型、TTL、并且可以配置路由实现QOS<br>Raw表：决定数据包是否被状态跟踪机制处理<br><br><span class="hljs-literal">INPUT</span>链——进来的数据包应用此规则链中的规则<br><span class="hljs-literal">OUTPUT</span>链——外出的数据包应用此规则链中的规则<br>FORWARD链——转发数据包时应用此规则链中的规则<br>PREROUTING链——对数据包作路由选择前应用此链中的规则<br>POSTROUTING链——对数据包作路由选择后应用此链中的规则<br><br></code></pre></td></tr></table></figure>
+
+
+<p><img src="/img/Linux/sibiaowulian.png" srcset="/img/loading.gif"><br><strong>查看类</strong></p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-L：list, 列出指定鏈上的所有规则，本选项须置后</span><br><span class="hljs-deletion">-n：numberic，以数字格式显示地址和端口号</span><br><span class="hljs-deletion">-v：verbose，详细信息</span><br><span class="hljs-deletion">-vv 更详细</span><br><span class="hljs-deletion">-x：exactly，显示计数器结果的精确值,而非单位转换后的易读值</span><br><span class="hljs-deletion">--line-numbers：显示规则的序号</span><br><span class="hljs-deletion">-S selected,以iptables-save 命令格式显示链上规则</span><br><br></code></pre></td></tr></table></figure>
+<p><strong>规则类</strong></p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-A：append，追加</span><br><span class="hljs-deletion">-I：insert, 插入，要指明插入至的规则编号，默认为第一条</span><br><span class="hljs-deletion">-D：delete，删除</span><br>(1) 指明规则序号<br>(2) 指明规则本身<br><span class="hljs-deletion">-R：replace，替换指定链上的指定规则编号</span><br><span class="hljs-deletion">-F：flush，清空指定的规则链</span><br><span class="hljs-deletion">-Z：zero，置零</span><br>iptables的每条规则都有两个计数器<br>(1) 匹配到的报文的个数<br>(2) 匹配到的所有报文的大小之和<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs Bash">//查看状态服务<br>systemctl status iptables.service<br>//查看已有的规则<br>[root@localhost ~]<span class="hljs-comment"># iptables -nvL --line-numbers</span><br>//拒绝某个ip请求<br>[root@localhost ~]<span class="hljs-comment"># iptables -A INPUT -s 192.168.3.100,192.168.10.5 -j REJECT</span><br>//允许某个请求<br>[root@localhost ~]<span class="hljs-comment"># iptables -A INPUT -s 10.0.0.200 -j ACCEPT</span><br>//插入规则 并更改顺序通过-I<br>[root@localhost ~]<span class="hljs-comment"># iptables -I INPUT 1 -s 192.168.3.100 -j ACCEPT</span><br>//删除某条规则<br>[root@localhost ~]<span class="hljs-comment"># iptables -D INPUT 2</span><br>//替换某条顺序规则   -R是替换  DROP是丢弃<br>[root@localhost ~]<span class="hljs-comment"># iptables -R INPUT 2 -s 192.168.0.0/24 -j DROP</span><br>//删除全部规则<br>[root@localhost ~]<span class="hljs-comment"># iptables -F</span><br>//-s表示源地址 -d表示目标地址   -d通常用于两个网卡，使某个服务访问不了另外个网卡<br>[root@localhost ~]<span class="hljs-comment"># iptables -A INPUT -s 192.168.142.156 -d 192.168.142.154 -j REJECT</span><br>From 192.168.142.154 icmp_seq=1 Destination Port Unreachable<br>//禁止某个源ip ping  -p是指定某个协议<br>[root@localhost ~]<span class="hljs-comment"># iptables -A INPUT -s 192.168.142.156 -p icmp -j REJECT</span><br>//拒绝某个ip访问本机的某个服务  --dport指的是端口<br>[root@localhost html]<span class="hljs-comment"># iptables -A INPUT -s 192.168.142.156 -p tcp --dport 80 -j REJECT</span><br>//-m 扩展模块可以使拒绝多个端口只在一条规则里头<br>[root@localhost html]<span class="hljs-comment"># iptables -A INPUT -s 192.168.142.156 -p tcp -m multiport --dports 80,443 -j REJECT</span><br>//iprange可以设置ip范围<br>[root@localhost html]<span class="hljs-comment"># iptables -A INPUT -d 192.168.142.154 -p tcp --dport 80 -m iprange --src-range 192.168.142.160-192.168.142.170 -j DROP</span><br>//拒绝某个网卡的mac地址<br>[root@localhost html]<span class="hljs-comment"># iptables -A INPUT -m mac --mac-source 00:0c:29:1e:b6:8e -j REJECT</span><br>//拒绝某个ip对有关youtube的网址访问 string扩展是对报文中的应用层数据做字符串模式匹配检测<br>[root@localhost ~]<span class="hljs-comment"># iptables -A OUTPUT -d 192.168.142.156 -p tcp --sport 80 -m string --algo bm --from 62 --string &quot;youtube&quot; -j REJECT</span><br>//超过规定的次数访问拒绝该请求 connlimit(根据每客户端ip做并发连接数量匹配 可防止dos攻击)<br>[root@localhost ~]<span class="hljs-comment"># iptables -A INPUT -m connlimit --connlimit-above 20 -j REJECT</span><br>//查询已追踪的链路记录<br>[root@localhost ~]<span class="hljs-comment"># cat /proc/net/nf_conntrack</span><br>//nf_conntrack_max值越小,链接记录数超过规定的阈值就导致用户无法访问<br>[root@localhost ~]<span class="hljs-comment"># cat /proc/sys/net/netfilter/nf_conntrack_max</span><br>100000<br><br>1.自定义链<br>[root@localhost ~]<span class="hljs-comment"># iptables -N web_chain</span><br>2.修改链<br>[root@localhost ~]<span class="hljs-comment"># iptables -E web_chain WEB_CHAIN</span><br>3.创建两条规则归属到自己创建的链<br>[root@localhost ~]<span class="hljs-comment"># iptables -A WEB_CHAIN -s 192.168.142.156 -p tcp --dport 80 -j REJECT</span><br>[root@localhost ~]<span class="hljs-comment"># iptables -A WEB_CHAIN -s 192.168.142.156 -p tcp --dport 8080 -j REJECT</span><br>4.将INPUT调用自定义链<br>[root@localhost ~]<span class="hljs-comment"># iptables -A INPUT -j WEB_CHAIN</span><br>5.创建一条规则禁止访问数据库<br>[root@localhost ~]<span class="hljs-comment"># iptables -A DB_CHAIN -s 192.168.142.156 -p tcp --dport 3306 -j REJECT</span><br>6.显示有那些防火墙规则<br>[root@localhost ~]<span class="hljs-comment"># iptablels-save</span><br>7.将防火墙规则保存下来<br>[root@localhost ~]<span class="hljs-comment"># iptables-save &gt; /data/iptables.rules</span><br>8.将防火墙备份的规则恢复<br>[root@localhost ~]<span class="hljs-comment"># iptables-restore &lt; /data/iptables.rules</span><br>9.清除自定义链的规则，如果规则被其他链使用也需要清除，否则无法删除自定义链名称<br>[root@localhost ~]<span class="hljs-comment"># iptables -F WEB_CHAIN</span><br>[root@localhost ~]<span class="hljs-comment"># iptables -D INPUT 1</span><br>10.清除自定义链名称<br>[root@localhost ~]<span class="hljs-comment"># iptables -X WEB_CHAIN</span><br>11.设置开启自动恢复规则<br>[root@localhost ~]<span class="hljs-comment"># cat /etc/rc.local</span><br>iptables-restore &lt; /data/iptables.rules<br>[root@localhost ~]<span class="hljs-comment"># chmod +x /etc/rc.local</span><br>12.可以将设置的规则覆盖到iptables.service的服务里头/etc/sysconfig/iptables前提需要安装iptables.service服务并设置开机自启动<br>[root@localhost ~]<span class="hljs-comment"># cp /data/iptables.rules  /etc/sysconfig/iptables</span><br>[root@localhost ~]<span class="hljs-comment"># systemctl restart iptables.service</span><br>13.开启ip_forward<br>[root@localhost ~]<span class="hljs-comment"># vim /etc/sysctl.conf</span><br>net.ipv4.ip_forward = 1<br>14.修改完以后需要执行sysctl -p 才能生效<br>[root@localhost ~]<span class="hljs-comment"># sysctl -p</span><br><br><br>15.通过标准模块实现内网访问外网，反之禁止(FORWARD链实现内外网络流量控制)<br>iptables -A FORWARD -m state --state ESTABLISHED -j ACCEPT  <span class="hljs-comment"># 已建立连接的可以正常访问</span><br>iptables -A FORWARD -s 192.168.142.0/24 ! -d 192.168.142.0/24 -m state --state NEW -j ACCEPT <span class="hljs-comment">#允许源地址访问目标地址，反之禁止</span><br>iptables -A FORWARD -j RECECT <span class="hljs-comment">#拒绝其他全部ip</span><br><br></code></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">NAT</span>表： network address translation, 支持PREROUTING, INPUT, OUTPUT, POSTROUTING四个链<br>请求报文： 修改源/目标<span class="hljs-built_in">IP</span> 由定义如何修改<br>响应报文： 修改源/目标<span class="hljs-built_in">IP</span> 根据跟踪机制自动实现 <br><span class="hljs-symbol">NAT</span>的实现分为下面类型:<br><span class="hljs-symbol">SNAT:</span> source NAT, 支持POSTROUTING,INPUT,让本地网络中的主机通过某一特定地址访问外部网络,实现地址伪装,请求报文：修改源<span class="hljs-built_in">IP</span><br><span class="hljs-symbol">DNAT:</span> destination NAT支持PREROUTING,OUTPUT,把本地网络中的主机上的某个服务开放给外部网络访问(发布服务和端口映射),但隐藏真实<span class="hljs-built_in">IP</span>，请求报文是修改目标<span class="hljs-built_in">IP</span><br><span class="hljs-symbol">PNAT:</span> port nat，端口和<span class="hljs-built_in">IP</span>都进行修改<br></code></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>测试网络段</strong></p>
+<ul>
+<li><strong>外部IP: 10.0.0.9(eth0仅主机)</strong></li>
+<li><strong>防火墙: 10.0.0.8(ehh0仅主机) 192.168.142.154&#x2F;24(eth1 NAT)</strong></li>
+<li><strong>内部IP: 192.168.142.156&#x2F;24(eth1 NAT) 192.168.142.154(GW)</strong></li>
+</ul>
+</li>
+<li><p><strong>SNAT示例</strong></p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-meta">#此时内部IP是ping不通外部IP的,</span><br>[root<span class="hljs-symbol">@inside</span> ~]<span class="hljs-meta"># ping 10.0.0.9</span><br><span class="hljs-built_in">PING</span> <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.9</span> (<span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.9</span>) <span class="hljs-number">56</span>(<span class="hljs-number">84</span>) bytes of data.<br><span class="hljs-meta"># 1.在防火墙上启用路由转发</span><br>[root<span class="hljs-symbol">@firewalld</span> ~]<span class="hljs-meta"># grep ip_forward /etc/sysctl.conf</span><br>net.ipv4.ip_forward = <span class="hljs-number">1</span><br><span class="hljs-meta"># 2.在防火墙添加一条命令,使用POSTROUTING做转发 -s表示内网地址网络段 --to-source表示用防火墙的ip去访问外部地址</span><br>[root<span class="hljs-symbol">@firewalld</span> ~]<span class="hljs-meta"># iptables -t nat -A POSTROUTING -s 192.168.142.0/24  -j SNAT --to-source 10.0.0.8 #适用于静态ip</span><br>[root<span class="hljs-symbol">@firewalld</span> ~]<span class="hljs-meta"># iptables -t nat -A POSTROUTING -s 192.168.142.0/24 -j MASQUERADE #适用于动态ip地址</span><br><span class="hljs-meta"># 3.查看POSTROUTING的规则</span><br>[root<span class="hljs-symbol">@firewalld</span> ~]<span class="hljs-meta"># iptables -nvL -t nat</span><br><span class="hljs-meta"># 4.删除NAT规则</span><br>[root<span class="hljs-symbol">@firewalld</span> ~]<span class="hljs-meta"># iptables -F -t nat</span><br><span class="hljs-meta"># 5.可以在客户端抓包查看</span><br>tcpdump -i ens33 -nn icmp<br></code></pre></td></tr></table></figure>
+<p><img src="/img/Linux/ROUTING.png" srcset="/img/loading.gif"></p>
+</li>
+<li><p><strong>DNAT示例</strong></p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-meta">#将内部主机端口转发到防火墙端口上进行放开</span><br>[root<span class="hljs-symbol">@firewalld</span> ~]<span class="hljs-meta"># iptables -t nat -A PREROUTING -d 10.0.0.8 -p tcp --dport 80 -j DNAT --to-destination 192.168.142.156:80</span><br>[root<span class="hljs-symbol">@firewalld</span> ~]<span class="hljs-meta"># iptables  -t nat -nvL PREROUTING</span><br>Chain PREROUTING (policy ACCEPT <span class="hljs-number">2</span> packets, <span class="hljs-number">152</span> bytes)<br> pkts bytes target     prot opt <span class="hljs-keyword">in</span>     out     source               destination<br>    <span class="hljs-number">7</span>   <span class="hljs-number">420</span> DNAT       tcp  --  *      *       <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>/<span class="hljs-number">0</span>            <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.8</span>             tcp dpt:<span class="hljs-number">80</span> <span class="hljs-keyword">to</span>:<span class="hljs-number">192.168</span><span class="hljs-number">.142</span><span class="hljs-number">.156</span>:<span class="hljs-number">80</span><br><span class="hljs-meta">#查看日志</span><br>tail /var/<span class="hljs-built_in">log</span>/httpd/access_log<br></code></pre></td></tr></table></figure>
+<p><img src="/img/Linux/DNAT.png" srcset="/img/loading.gif"></p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Linux/">Linux</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Linux基础知识</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/31/zabbix/Zabbix%E6%A6%82%E5%BF%B5%E7%B3%BB%E7%BB%9F(%E4%B8%80)/">
+                        <span class="hidden-mobile">Zabbix概念系统（一）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

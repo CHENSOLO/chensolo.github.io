@@ -1,0 +1,546 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" >
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  
+    <meta name="description" content="">
+  
+  <meta name="author" content="lemonchen">
+  <meta name="keywords" content="">
+  
+  <title>Exchange Server 2016 部署系列（五）基础配置 - lemonchen</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/googlecode.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"chensolo.github.io.git","root":"/","version":"1.8.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Never slack off</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Exchange Server 2016 部署系列（五）基础配置">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-08-31 12:14" pubdate>
+        2022年8月31日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      677 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      7
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Exchange Server 2016 部署系列（五）基础配置</h1>
+            
+            <div class="markdown-body">
+              <p><strong>虚拟目录</strong><br><strong>自动发现配置</strong><br>有的朋友可能知道，虽然在虚拟目录里有自动发现这个选项，但自动发现记录在图形化界面无法配置自动发现地址，如图所示。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-4d8a5aafd92e5d42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_1585105398994.png"></p>
+<ul>
+<li>其实自动发现路径需要使用命令修改，我们先查下现在的自动发现写的是什么</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">查看自动发现配置情况命令：<br><span class="hljs-keyword">Get</span>-ClientAccessService | <span class="hljs-keyword">select</span> <span class="hljs-type">Name</span>,AutoDiscoverServiceInternalUr<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-9bbb84af2e6232ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_1584955914303.png"></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs 1c">修改自动发现命令：<br>Get-ClientAccessService <span class="hljs-string">| Set-ClientAccessService -AutoDiscoverServiceInternalUri &quot;</span>[https:<span class="hljs-comment">//mail.iphonefintech.com/Autodiscover/Autodiscover.xml](https://mail.iphonefintech.com/Autodiscover/Autodiscover.xml)</span><br><br></code></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-763b487f6aed4fe1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849561101075.png"></p>
+<ul>
+<li>至此我们就修改完成了自动发现</li>
+</ul>
+<p><strong>ECP配置</strong></p>
+<ul>
+<li><p>参照截图，导航到服务器-虚拟目录-Ecp-修改<br><img src="https://upload-images.jianshu.io/upload_images/9650472-f2b9a0a1f2fabbfc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849582118425.png"></p>
+</li>
+<li><p>参照截图，修改ECP路径，内外网路径可以一样也可以不一样，如图所示<br><img src="https://upload-images.jianshu.io/upload_images/9650472-15cbfc1079bee82a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_1584958260703.png"></p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-c9d59f9e544c20b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849583734021.png"></p>
+<ul>
+<li>参照截图，导航到服务器-虚拟目录-Owa-修改</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-546ba7d918579b1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_1584958406980.png"></p>
+<ul>
+<li>参照截图，修改Owa路径，内外网路径可以一样也可以不一样，如图所示<br><img src="https://upload-images.jianshu.io/upload_images/9650472-69d5ac02ffab1c4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849584492008.png"></li>
+</ul>
+<p><strong>EWS配置</strong></p>
+<ul>
+<li><p>同样，导航到服务器-虚拟目录-EWS-修改<br><img src="https://upload-images.jianshu.io/upload_images/9650472-80957301d9385c24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849585109067.png"></p>
+</li>
+<li><p>修改内外网访问路径<br><img src="https://upload-images.jianshu.io/upload_images/9650472-35b898ba0a5d2c33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_1584958550525.png"></p>
+</li>
+</ul>
+<p><strong>MAPI配置</strong><br><img src="https://upload-images.jianshu.io/upload_images/9650472-21ecc96b97a53a12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15851097732013.png"></p>
+<ul>
+<li>修改内外网访问路径<br><img src="https://upload-images.jianshu.io/upload_images/9650472-af5e5715fa0b42a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849586437630.png"></li>
+</ul>
+<p><strong>ActiveSync修改配置</strong><br><img src="https://upload-images.jianshu.io/upload_images/9650472-75df2986103d7af9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849587097603.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-9abca3e343de999f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_1584958741188.png"></p>
+<p><strong>OAB修改配置</strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-95a6ddbef631020c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849587919189.png"></p>
+<ul>
+<li>修改内外网访问URL<br><img src="https://upload-images.jianshu.io/upload_images/9650472-5d1f7e4d4a36b607.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15851102118147.png"></li>
+</ul>
+<p><strong>PowerShell修改配置</strong><br><img src="https://upload-images.jianshu.io/upload_images/9650472-84b00042047dc705.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849588477614.png"></p>
+<ul>
+<li>修改内外网访问URL<br><img src="https://upload-images.jianshu.io/upload_images/9650472-db17949dc42dd763.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849588832832.png"></li>
+</ul>
+<p><strong>接收域配置</strong><br><img src="https://upload-images.jianshu.io/upload_images/9650472-df88b87cb42c69e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15851107143742.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-f5c78c14809b8290.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_1585110756146.png"></p>
+<p><strong>地址策略配置</strong></p>
+<ul>
+<li>打开ECP导航到邮件流-电子邮件地址策略-+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-39cb94012668264a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="01.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-e943a277e12c2db5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="02.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-5f1896de748549ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="03.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-c737f26def1a61c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="04.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-e5b4580771e70e02.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="05.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-501d6fd6bfd6925c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="06.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-069b80b03ac4dd8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="07.png"></p>
+<p><strong>数据库创建</strong></p>
+<ul>
+<li>打开ECP，导航到服务器-数据库-“+”</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-86af06ba138b4123.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="01.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-d61ad789ec7405b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="02.png"></p>
+<ul>
+<li><p>输入数据库名称、路径、与Log路径，大家可能看到了我的数据库EDB文件路径与Log不在同一路径下，这个是最佳实践的建议。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-e07a8fa4688675f7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="03.png"></p>
+</li>
+<li><p>重启相关服务器即可<br><img src="https://upload-images.jianshu.io/upload_images/9650472-2400698f5b58ca6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="04.png"></p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-08b88576957ac9ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="05.png"></p>
+<ul>
+<li><p>数据库创建完成。第一篇架构设计时候我们说了，大领导的邮箱配额是5G，我们直接修改数据库的配额即可。或者单个用户去修改<br><img src="https://upload-images.jianshu.io/upload_images/9650472-d40838ca3c341c27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="06.png"></p>
+</li>
+<li><p>参照截图修改数据库配额，这里修改完成后在该数据库里的所有用户邮箱配额都是5G<br><img src="https://upload-images.jianshu.io/upload_images/9650472-1ae903bd479b3750.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="07.png"></p>
+</li>
+</ul>
+<p><strong>新建用户</strong><br><img src="https://upload-images.jianshu.io/upload_images/9650472-2acb82b3c3985069.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_1584976211327.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-9e2db19ca9f40da1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="企业微信截图_15849762634252.png"></p>
+<p><strong>发送连接器配置</strong></p>
+<ul>
+<li>如果要将邮件发送到 Internet，需要在邮箱服务器上创建发送连接器。<br>打开EAC管理控制台，转到“邮件流”，并切换到“发送连接器”。在“发送连接器”页上，单击“+”  ，新建发送连接器.<br><img src="https://upload-images.jianshu.io/upload_images/9650472-755bcf04454cf86f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="01.png"></li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-823e0cfa6a93a84c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="02.png"></p>
+<ul>
+<li>通过DNS路由，解析收件人关联的MX记录；或添加邮件网关。<br><img src="https://upload-images.jianshu.io/upload_images/9650472-e62a6816d6a7b00e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="03.png"></li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-0bdfd0dbc864c3ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="04.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-db28b13802f8f2d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="05.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-9fd6967bdad292ee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="06.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-8e69e32ce7b03f88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="07.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-1fbc00c5c499704e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="08.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-88d600d96c3b4444.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="09.png"></p>
+<p><strong>接收连接器配置</strong></p>
+<ul>
+<li><p>接收连接器默认有5条策略，分属2种角色，</p>
+</li>
+<li><p>前端传输（FrontendTransport）：Client Frontend EX01、Default Frontend EX01、Outbound Proxy Frontend EX01；</p>
+</li>
+<li><p>集线器传输（HubTransport）：Client Proxy EX01、Default EX01；</p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-ce0d879bcaf04e85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="01.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-aea680e21a395022.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="02.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-2249bb2e785b5296.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="03.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9650472-da785b5bbc8be8d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="04.png"></p>
+<p>其他基本也是一样的，这里就不做操作了。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Exchange2016/">Exchange2016</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Exchange2016/">Exchange2016</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/31/Exchange2016/exchange2016_04/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Exchange Server 2016 部署系列（四）基础配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/31/Exchange2016/exchange2016_01/">
+                        <span class="hidden-mobile">Exchange Server 2016 部署系列（一）环境准备</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

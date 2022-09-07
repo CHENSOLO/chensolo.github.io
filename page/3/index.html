@@ -46,7 +46,7 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.2"></head>
 
 
 <body>
@@ -165,28 +165,33 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/03/Exchange2016/exchange2016_06/" target="_self">
-          <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（六）高可用 DAG">
+        <a href="/2022/08/31/Exchange2016/exchange2016_other_01/" target="_self">
+          <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 遇到的一些问题错误解决方法">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/03/03/Exchange2016/exchange2016_06/">Exchange Server 2016 部署系列（六）高可用 DAG</a>
+        <a href="/2022/08/31/Exchange2016/exchange2016_other_01/">Exchange Server 2016 遇到的一些问题错误解决方法</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/03/03/Exchange2016/exchange2016_06/">
+        <a href="/2022/08/31/Exchange2016/exchange2016_other_01/">
           
           
             
           
-          见证目录权限配置本次实验中将使用DC作为见证服务器，需要将Exchange Trusted Subsytem组加入到见证服务器的本地Administrators组中，在DC中需要使用AD用户和计算机来添加
+          邮件发送到外部邮箱账号失败
+– 然后重新配置了邮件流-发送连接器-发送internet
 
-添加Exchange Trusted Subsytem组到Administrators组中
 
-在域控制器上，打开Active Directory用户和计算机，展开域节点“computer”，在
+
+
+
+
+
+
         </a>
       </p>
 
@@ -194,8 +199,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-03 12:38" pubdate>
-              2021-03-03
+            <time datetime="2022-08-31 12:14" pubdate>
+              2022-08-31
             </time>
           </div>
         
@@ -223,7 +228,120 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/03/Exchange2016/exchange2016_05/" target="_self">
+        <a href="/2022/08/31/Exchange2016/exchange2016_06/" target="_self">
+          <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（六）高可用 DAG">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/08/31/Exchange2016/exchange2016_06/">Exchange Server 2016 部署系列（六）高可用 DAG</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/08/31/Exchange2016/exchange2016_06/">
+          
+          
+            
+          
+          见证目录权限配置本次实验中将使用DC作为见证服务器，需要将Exchange Trusted Subsytem组加入到见证服务器的本地Administrators组中，在DC中需要使用AD用户和计算机来添加
+
+添加Exchange Trusted Subsytem组到Administrators组中
+
+在域控制器上，打开Active Directory用户和计算机，展开域节点“computer”，在
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-31 12:14" pubdate>
+              2022-08-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Exchange2016/">Exchange2016</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Exchange2016/">Exchange2016</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/08/31/Exchange2016/exchange2016_04/" target="_self">
+          <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（四）基础配置">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/08/31/Exchange2016/exchange2016_04/">Exchange Server 2016 部署系列（四）基础配置</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/08/31/Exchange2016/exchange2016_04/">
+          
+          
+            
+          
+          我们在上一篇中完成了Exchange Server 2016 CU15的安装,接下来我们将进入配置相关内容,首先我们将会进行DNS记录配置，证书配置，证书申请，证书导入。
+1.DNS记录配置部署过Exchange Server的朋友可能知道，部署完成Exchange后，只能使用IP或者LocalHost方式访问，除非您在您的DNS里添加A记录，才能以配置的域名去访问登陆，首先就要在域的DNS里创建
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-31 12:14" pubdate>
+              2022-08-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Exchange2016/">Exchange2016</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Exchange2016/">Exchange2016</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/08/31/Exchange2016/exchange2016_05/" target="_self">
           <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（五）基础配置">
         </a>
       </div>
@@ -231,11 +349,11 @@
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/03/03/Exchange2016/exchange2016_05/">Exchange Server 2016 部署系列（五）基础配置</a>
+        <a href="/2022/08/31/Exchange2016/exchange2016_05/">Exchange Server 2016 部署系列（五）基础配置</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/03/03/Exchange2016/exchange2016_05/">
+        <a href="/2022/08/31/Exchange2016/exchange2016_05/">
           
           
             
@@ -255,8 +373,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-03 12:36" pubdate>
-              2021-03-03
+            <time datetime="2022-08-31 12:14" pubdate>
+              2022-08-31
             </time>
           </div>
         
@@ -284,172 +402,7 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/03/Exchange2016/exchange2016_04/" target="_self">
-          <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（四）基础配置">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/03/03/Exchange2016/exchange2016_04/">Exchange Server 2016 部署系列（四）基础配置</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/03/03/Exchange2016/exchange2016_04/">
-          
-          
-            
-          
-          我们在上一篇中完成了Exchange Server 2016 CU15的安装,接下来我们将进入配置相关内容,首先我们将会进行DNS记录配置，证书配置，证书申请，证书导入。
-1.DNS记录配置部署过Exchange Server的朋友可能知道，部署完成Exchange后，只能使用IP或者LocalHost方式访问，除非您在您的DNS里添加A记录，才能以配置的域名去访问登陆，首先就要在域的DNS里创建
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-03 12:34" pubdate>
-              2021-03-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Exchange2016/">Exchange2016</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Exchange2016/">Exchange2016</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/03/Exchange2016/exchange2016_03/" target="_self">
-          <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（三）环境准备">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/03/03/Exchange2016/exchange2016_03/">Exchange Server 2016 部署系列（三）环境准备</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/03/03/Exchange2016/exchange2016_03/">
-          
-          
-            
-          
-          上一章Exchange Server 2016 部署系列（二)环境准备部署篇我们对部署AD已经准备完成了，接下来我们进入对Exchange Server 2016的搭建。ExSrv01（第一台邮件服务器）:入域到AD上，这一步我就不再操作了直接开始安装组件，远程管理包，exchange 2016。
-首先我们先安装组件这些组件都可以在微软官网上下，或者百度一下都是有很多的，这里就不提供了。1..NE
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-03 10:04" pubdate>
-              2021-03-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Exchange2016/">Exchange2016</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Exchange2016/">Exchange2016</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/02/Exchange2016/exchange2016_02/" target="_self">
-          <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（二）环境准备">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/03/02/Exchange2016/exchange2016_02/">Exchange Server 2016 部署系列（二）环境准备</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/03/02/Exchange2016/exchange2016_02/">
-          
-          
-            
-          
-          上一章Exchange Server 2016 部署系列（一)环境准备部署篇我们对部署AD已经有了基本的认识，接下来我们进入对Exchange Server 2016的先决条件做准备工作。
-先决条件准备Exchange Server 2016先决条件准备：https://docs.microsoft.com/zh-cn/Exchange/plan-and-deploy/prepare-ad-and
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-02 19:41" pubdate>
-              2021-03-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Exchange2016/">Exchange2016</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Exchange2016/">Exchange2016</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/03/02/Exchange2016/exchange2016_01/" target="_self">
+        <a href="/2022/08/31/Exchange2016/exchange2016_01/" target="_self">
           <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（一）环境准备">
         </a>
       </div>
@@ -457,11 +410,11 @@
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/03/02/Exchange2016/exchange2016_01/">Exchange Server 2016 部署系列（一）环境准备</a>
+        <a href="/2022/08/31/Exchange2016/exchange2016_01/">Exchange Server 2016 部署系列（一）环境准备</a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/03/02/Exchange2016/exchange2016_01/">
+        <a href="/2022/08/31/Exchange2016/exchange2016_01/">
           
           
             
@@ -475,8 +428,118 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-02 10:04" pubdate>
-              2021-03-02
+            <time datetime="2022-08-31 12:14" pubdate>
+              2022-08-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Exchange2016/">Exchange2016</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Exchange2016/">Exchange2016</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/08/31/Exchange2016/exchange2016_03/" target="_self">
+          <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（三）环境准备">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/08/31/Exchange2016/exchange2016_03/">Exchange Server 2016 部署系列（三）环境准备</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/08/31/Exchange2016/exchange2016_03/">
+          
+          
+            
+          
+          上一章Exchange Server 2016 部署系列（二)环境准备部署篇我们对部署AD已经准备完成了，接下来我们进入对Exchange Server 2016的搭建。ExSrv01（第一台邮件服务器）:入域到AD上，这一步我就不再操作了直接开始安装组件，远程管理包，exchange 2016。
+首先我们先安装组件这些组件都可以在微软官网上下，或者百度一下都是有很多的，这里就不提供了。1..NE
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-31 12:14" pubdate>
+              2022-08-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Exchange2016/">Exchange2016</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Exchange2016/">Exchange2016</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/08/31/Exchange2016/exchange2016_02/" target="_self">
+          <img src="/img/article/Exchange2016/EX_article_01.jpg" srcset="/img/loading.gif" alt="Exchange Server 2016 部署系列（二）环境准备">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/08/31/Exchange2016/exchange2016_02/">Exchange Server 2016 部署系列（二）环境准备</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/08/31/Exchange2016/exchange2016_02/">
+          
+          
+            
+          
+          上一章Exchange Server 2016 部署系列（一)环境准备部署篇我们对部署AD已经有了基本的认识，接下来我们进入对Exchange Server 2016的先决条件做准备工作。
+先决条件准备Exchange Server 2016先决条件准备：https://docs.microsoft.com/zh-cn/Exchange/plan-and-deploy/prepare-ad-and
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-31 12:14" pubdate>
+              2022-08-31
             </time>
           </div>
         
