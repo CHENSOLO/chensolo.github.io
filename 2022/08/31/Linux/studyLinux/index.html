@@ -170,7 +170,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.3k 字
+      2.5k 字
     </span>
   
 
@@ -180,7 +180,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      33
+      35
        分钟
     </span>
   
@@ -244,6 +244,18 @@
 <h2 id="二、AWK"><a href="#二、AWK" class="headerlink" title="二、AWK"></a>二、AWK</h2><ul>
 <li>awk用于处理文本，将文本按照指定的格式输出，以下是使用的参数。<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs gams">-F	指定分隔符<br>-v	指定变量和默认值<br><span class="hljs-meta"><span class="hljs-keyword">$NF</span>	代表最后一个字段</span><br>NR	代表第几行<br>&amp;&amp;	与<br>||	或<br>FS	输入分隔符，与-F分隔符一样<br>OFS	输出字段分隔符<br>RS	输入记录分隔符<br><span class="hljs-meta"><span class="hljs-keyword">$0</span>	显示整行</span><br><span class="hljs-number">1.</span>..N	第一个字段到第N个字段<br></code></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#获取sd名称分区的利用率，[ %]+ 属于正则表达式的空格</span><br>[root@firewalld ~]<span class="hljs-comment"># df | grep &#x27;^/dev/sd&#x27; | awk -F &quot;[ %]+&quot; &#x27;&#123;print $5&#125;&#x27;</span><br><span class="hljs-comment">#获取某个网卡的ip地址</span><br>[root@firewalld ~]<span class="hljs-comment"># ifconfig ens33 | awk -F &quot;[ ]+&quot; &#x27;NR==2&#123;print $3&#125;&#x27;</span><br><span class="hljs-comment">#快速取出标头</span><br>[root@firewalld ~]<span class="hljs-comment"># cat -A host_list.log</span><br>1 www.magedu.com$<br>2 blog.magedu.com$<br>3 study.magedu.com$<br>4 linux.magedu.com$<br>5 python.magedu.com$<br>[root@firewalld ~]<span class="hljs-comment"># awk -F &quot;[ .]&quot; &#x27;&#123;print $2&#125;&#x27; host_list.log</span><br>www<br>blog<br>study<br>linux<br>python<br><span class="hljs-comment">#FS(File Separator)指定冒号做分隔符</span><br>[root@firewalld ~]<span class="hljs-comment"># awk -v FS=&quot;:&quot; &#x27;&#123;print $1,$3&#125;&#x27; /etc/passwd</span><br><span class="hljs-comment">#NF每行的字段数 NF-1则是倒数第二列</span><br>[root@firewalld ~]<span class="hljs-comment"># df -Th |awk -F&#x27;[ ]+&#x27; &#x27;&#123;print $(NF)&#125;&#x27;</span><br>[root@firewalld ~]<span class="hljs-comment"># df -Th |awk -F&#x27;[ ]+&#x27; &#x27;&#123;print $(NF-1)&#125;&#x27;</span><br>Mounted<br>0%<br>0%<br>11%<br>0%<br>5%<br>8%<br>17%<br>0%<br><span class="hljs-comment"># $0显示整行  模式匹配: ~(左边是否和右边匹配 包含关系) !~ (是否不匹配)</span><br>[root@firewalld ~]<span class="hljs-comment"># df | awk &#x27;$0 ~/\/dev\/sd/&#123;print $(NF-1)&#125;&#x27;</span><br>8%<br>17%<br><span class="hljs-comment">#仅处理能够模式匹配到的行 用//括起来</span><br>[root@firewalld ~]<span class="hljs-comment"># ifconfig ens33 | awk &#x27;/netmask/&#123;print $2&#125;&#x27;</span><br>192.168.142.154<br><span class="hljs-comment">#可以指定r列到f列</span><br>[root@firewalld ~]<span class="hljs-comment"># awk &#x27;/^r/,/^f/&#x27; /etc/passwd</span><br>root:x:0:0:root:/root:/bin/bash<br>ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin<br><span class="hljs-comment">#两种方法可以检测出连接数</span><br>[root@firewalld ~]<span class="hljs-comment"># ss -nta | awk &#x27;NR!=1&#123;print $1&#125;&#x27; | sort | uniq -c</span><br>     12 ESTAB<br>      5 LISTEN<br>[root@firewalld ~]<span class="hljs-comment"># ss -nta | awk &#x27;NR!=1&#123;state[$1]++&#125;END&#123;for (i in state)&#123;print i,state[i]&#125;&#125;&#x27;</span><br>LISTEN 5<br>ESTAB 12<br><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="三、加密算法"><a href="#三、加密算法" class="headerlink" title="三、加密算法"></a>三、加密算法</h2><ul>
+<li><p><strong>对称加密算法</strong>  </p>
+  <div class="note note-danger">
+            <p>小红(发送)——————–&gt;小王(拿到)        		<br>data(明文)–&gt;key1(加密)–&gt;data(密文)–&gt;key2(解密)–&gt;data(明文)<br>key1 &#x3D;&#x3D; key2 </p>
+          </div> 
+
+</li>
+<li><p><strong>非对称加密算法</strong><br>  <strong>公钥与私钥是一对,相当于小红有自己的公钥和私钥,小明也有自己的公钥和私钥,公钥是可以公开的。</strong></p>
+  <div class="note note-danger">
+            <p>小红(发送)——————–&gt;小王(拿到)        		<br>data(明文)–&gt;key1(加密)–&gt;data(密文)–&gt;key2(解密)–&gt;data(明文)<br>key1&#x3D; Pb<br>key2&#x3D; Sb</p><p>小红(发送)——————–&gt;小王(拿到)        		<br>data(明文)–&gt;key1(加密)–&gt;data(密文)–&gt;key2(解密)–&gt;data(明文)<br>key1&#x3D; Sa<br>key2&#x3D; Pa</p><p>:小红用小王给的锁头给盒子上锁,并将盒子交给小明,小明利用自己的私钥(钥匙)打开,因为只有小王才有自己的私钥。<br>key1  ！&#x3D; key2 </p>
+          </div></li>
 </ul>
 
             </div>
