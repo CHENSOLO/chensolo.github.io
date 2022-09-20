@@ -165,6 +165,72 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/08/31/Powershell/powershell_add_user/" target="_self">
+          <img src="/img/Powershell/Powershell_article_01.jpg" srcset="/img/loading.gif" alt="Powershell批量创建AD用户">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/08/31/Powershell/powershell_add_user/">Powershell批量创建AD用户</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/08/31/Powershell/powershell_add_user/">
+          
+          
+            
+          
+          查看Powershell版本
+
+准备好相关域用户信息，一般都是Excel表，以AdUserData.csv格式保存，再以文档模式打开，编码设置UTF-8保存覆盖当前文件。
+
+
+
+
+
+此时无用户
+
+12345Import-Csv &#x27;C:\Users\administrator\Desktop\AdUserData.csv&#x27;| ForEach-Object&#123;New-ADU
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-08-31 12:14" pubdate>
+              2022-08-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Windows/">Windows</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/powershell/">powershell</a>
+            
+              <a href="/tags/WinServer/">WinServer</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/08/31/MDT/windows_autoinstall_06/" target="_self">
           <img src="/img/article/MDT/MDT_article_01.jpg" srcset="/img/loading.gif" alt="Windows自动化装机部署（六）自动化部署配置">
         </a>
@@ -716,61 +782,6 @@ Dhcp: 用来给 客户端（将要安装系统的主机）分配IP 地
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/kms-win10-office/">kms win10 office</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/08/31/Linux/ceph_experiment/" target="_self">
-          <img src="/img/Linux/ceph.png" srcset="/img/loading.gif" alt="Ceph部署实践">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/08/31/Linux/ceph_experiment/">Ceph部署实践</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/08/31/Linux/ceph_experiment/">
-          
-          
-            
-          
-          Ceph部署实践(虚拟环境下实现)osd：存储数据、复制数据、平衡数据、恢复数据等，与其它OSD间进行心跳检查等，并将一些变化情况上报给Ceph Monitor。
-mon：一个监视器，负责监视Ceph集群，维护Ceph集群的健康状态，同时维护着Ceph集群中的各种Map图。Mds: Ceph 元数据服务器（ MDS ）为 Ceph 文件系统存储元数据（也就是说，Ceph 块设备和 Ceph 对象存
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-08-31 12:14" pubdate>
-              2022-08-31
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Linux/">Linux</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%98%E5%82%A8/">分布式存储</a>
             
           </div>
         
